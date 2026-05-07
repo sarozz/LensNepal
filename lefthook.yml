@@ -1,0 +1,11 @@
+pre-commit:
+  parallel: false
+  commands:
+    format:
+      glob: '*.{ts,tsx,js,jsx,json,jsonc}'
+      run: pnpm biome format --write {staged_files} && git add {staged_files}
+    lint:
+      glob: '*.{ts,tsx,js,jsx}'
+      run: pnpm biome lint {staged_files}
+    typecheck:
+      run: pnpm typecheck
