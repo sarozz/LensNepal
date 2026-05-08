@@ -6,6 +6,16 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (b) — theme + fonts
+
+- Three Unistyles themes (`light`, `dark`, `outdoorBright`) wired via `StyleSheet.configure`. Tokens split into `tokens/{colors,typography,motion,spacing,elevation}.ts` per BRIEF §9.1.
+- `useAppFonts` hook scaffolded over `expo-font.useFonts` with an empty map; binaries land later (see `src/assets/fonts/README.md`). App falls back to system fonts in the meantime — no runtime errors.
+- Token-tree walker test (`src/theme/themes.test.ts`) iterates every required colour, elevation level, typography token, plus spacing/radius/fontFamily/motion across all three themes. 100 % coverage on `src/theme` (Phase 1 target ≥ 70 %).
+- `babel.config.js` already on `react-native-worklets/plugin`; no further babel changes.
+- `jest.setup.ts` switched to `import '@testing-library/react-native'` (RNTL v13 self-extends `expect` on import). Custom `transformIgnorePatterns` removed from `jest.config.js` — the `jest-expo` preset already handles pnpm's `.pnpm/` indirection correctly.
+- Choices recorded (Q1–Q4 in chat): full font roster (Fraunces, Inter, Mukta, Tiro Devanagari Hindi, Noto Sans Devanagari); 4 dp spacing scale; `xs:4 / sm:8 / md:12 / lg:16 / pill:9999` radii; phone-only breakpoint `{ xs: 0 }`.
+- Verifications: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test`, `pnpm test:coverage` all green.
+
 #### Commit (a) — bootstrap + tooling
 
 - pnpm + Expo SDK 55 (New Architecture default) + TypeScript strict + Biome + lefthook + Jest scaffolding.
