@@ -4,6 +4,9 @@
   "retry": "Retry",
   "dismiss": "Dismiss",
   "loading": "Loading…",
+  "placeholder": "Coming soon.",
+  "notFound": "We can't find that screen.",
+  "backToStart": "Back to start",
   "error": {
     "generic": "Something went wrong.",
     "offline": "You're offline.",

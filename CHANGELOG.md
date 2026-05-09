@@ -6,6 +6,20 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (f) — app shell + tabs (pulled forward)
+
+- Pulled forward of (d) and (e) at the user's request so the dev server has something visible to render. New phase order: `(a)→(b)→(c)→(f)→(d)→(e)→(g)→(h)→(i)`. Storage and observability slot in afterwards and hot-reload into the live app.
+- Four-tab shell via `expo-router`: explore, routes, collection, guide. Tab labels resolved through `useTranslation('tabs')`; tab bar tinted by the active theme.
+- Root `_layout.tsx` mounts `<I18nextProvider>`, triggers `StyleSheet.configure` via `import '@/theme'`, calls `useAppFonts()`, hides the splash screen once fonts resolve (or error).
+- Modal `etiquette.tsx` route ships as a placeholder rendering `t('common:placeholder')` + dismiss button. Real cultural copy lands in commit (g).
+- `+not-found.tsx` 404 with a back-to-root link.
+- Primitives — `Text`, `Surface`, `Stack`, `Pressable` — landed in `src/components/primitives/`. `Text` automatically picks Latin vs Devanagari sizing based on current language. Each primitive has a unit test.
+- `useTheme()` hook in `src/hooks/` wraps `useUnistyles().theme` and returns the typed `AppTheme`.
+- Three new keys in `common` namespace (en + ne, `[NE]`-prefixed): `placeholder`, `notFound`, `backToStart`. Translation pending.
+- New devDep: `@expo/ngrok` (with explicit user approval per CLAUDE §3.2) so `expo start --tunnel` works without a runtime prompt.
+- `jest.setup.ts` now mocks `react-native-unistyles` so primitives render in jsdom without the native bridge — returns the `lightTheme` from the actual themes module.
+- Verifications: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` (40 tests across 8 suites).
+
 #### Commit (c) — i18n
 
 - `i18next` + `react-i18next` initialised in `src/i18n/index.ts` with three namespaces (`common`, `tabs`, `etiquette`) for English and Nepali. Resources bundled directly (no lazy loading; six small JSONs).

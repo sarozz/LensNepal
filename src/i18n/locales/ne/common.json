@@ -4,6 +4,9 @@
   "retry": "[NE] Retry",
   "dismiss": "[NE] Dismiss",
   "loading": "[NE] Loading…",
+  "placeholder": "[NE] Coming soon.",
+  "notFound": "[NE] We can't find that screen.",
+  "backToStart": "[NE] Back to start",
   "error": {
     "generic": "[NE] Something went wrong.",
     "offline": "[NE] You're offline.",
