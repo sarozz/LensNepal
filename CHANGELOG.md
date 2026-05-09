@@ -6,6 +6,16 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (d) — storage + query
+
+- `src/lib/mmkv.ts` exposes a single MMKV instance (`id: 'kathmandu-lens'`) per Q2-A — query cache, app settings, and feature data all share one bucket. Phase 1 volume is small enough that the simpler model wins.
+- `src/lib/storage.ts` ships a typed key registry (`hasSeenEtiquette`, `preferredLanguage`, `preferredTheme`) plus `get/set/remove/clear` helpers narrowed to known keys. Adds `querySyncStorage`, the `Storage` adapter the persister consumes (sync `getItem`/`setItem`/`removeItem`).
+- `src/lib/query-client.ts` configures the `QueryClient` with `networkMode: 'offlineFirst'`, `staleTime: 24h`, `gcTime: 24h`, `retry: 0`, and exports a ready-to-use `persistOptions` (`{ persister, maxAge: 24h }`) for `<PersistQueryClientProvider>`. The persister is the canonical `createSyncStoragePersister` from `@tanstack/query-sync-storage-persister` (Q1-A; new dep with prior approval).
+- `app/_layout.tsx` now wraps the router stack in `<PersistQueryClientProvider>` between the i18n provider and the navigator.
+- `jest.setup.ts` adds an in-memory `MMKV` mock so `src/lib` tests run in jsdom; storage round-trips and query-client defaults are verified end-to-end.
+- Verifications: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` (56/56 across 10 suites), `pnpm test:coverage` (100% on both `src/lib` and `src/theme`).
+- Out of scope, intentionally: language and theme persistence — keys are pre-declared but no callsite reads/writes them yet. Lands when the toggle UIs do. No `useQuery` callers either; Phase 1 has no remote data.
+
 #### Commit (f) — app shell + tabs (pulled forward)
 
 - Pulled forward of (d) and (e) at the user's request so the dev server has something visible to render. New phase order: `(a)→(b)→(c)→(f)→(d)→(e)→(g)→(h)→(i)`. Storage and observability slot in afterwards and hot-reload into the live app.

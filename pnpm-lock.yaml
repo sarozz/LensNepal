@@ -17,6 +17,9 @@ importers:
       '@shopify/flash-list':
         specifier: ^2.0.0
         version: 2.3.1(@babel/runtime@7.29.2)(react-native@0.81.6(@babel/core@7.29.0)(@react-native/metro-config@0.85.3(@babel/core@7.29.0))(@types/react@19.2.14)(react@19.2.6))(react@19.2.6)
+      '@tanstack/query-sync-storage-persister':
+        specifier: ^5.0.0
+        version: 5.100.9
       '@tanstack/react-query':
         specifier: ^5.0.0
         version: 5.100.9(react@19.2.6)
@@ -1578,6 +1581,9 @@ packages:
 
   '@tanstack/query-persist-client-core@5.100.9':
     resolution: {integrity: sha512-sCPZZp3D9sOeqcA4SDxjUIm4wVq8PwHebH4ouFZetwjT4xvGjT/cLBQ4Sst+BFcFuk745pCPkf3T4MFliLHECQ==}
+
+  '@tanstack/query-sync-storage-persister@5.100.9':
+    resolution: {integrity: sha512-v3cShfFtrxiLwc8b/fjQbUO4wIT//wLT5x4WWl8k/11s2ZyW9qpXE4xFWhiuAHCvKLluF0iI7ZnhT7BAlihwgg==}
 
   '@tanstack/react-query-persist-client@5.100.9':
     resolution: {integrity: sha512-qO7j+3VUZm4YH4T3dWszDqgvO+5+6NB1kSY+QmF7JD6+IONfeNmGyOzyobjmrX+6CYLPQtQ+sjM9vFYaSOAv6A==}
@@ -6365,6 +6371,11 @@ snapshots:
   '@tanstack/query-persist-client-core@5.100.9':
     dependencies:
       '@tanstack/query-core': 5.100.9
+
+  '@tanstack/query-sync-storage-persister@5.100.9':
+    dependencies:
+      '@tanstack/query-core': 5.100.9
+      '@tanstack/query-persist-client-core': 5.100.9
 
   '@tanstack/react-query-persist-client@5.100.9(@tanstack/react-query@5.100.9(react@19.2.6))(react@19.2.6)':
     dependencies:
