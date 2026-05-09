@@ -8,7 +8,7 @@ export default function NotFound() {
     <Surface background="bg" padding="xl" style={{ flex: 1, justifyContent: 'center' }}>
       <Stack gap="lg" align="center">
         <Text variant="title1">{t('notFound')}</Text>
-        <Link href="/" replace>
+        <Link href="/(tabs)/explore" replace>
           <Text variant="callout" color="accent">
             {t('backToStart')}
           </Text>
