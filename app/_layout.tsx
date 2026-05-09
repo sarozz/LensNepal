@@ -5,8 +5,13 @@ import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { useAppFonts } from '@/hooks/useAppFonts';
 import { i18n } from '@/i18n';
+import { initAnalytics } from '@/lib/analytics';
 import { persistOptions, queryClient } from '@/lib/query-client';
+import { initSentry } from '@/lib/sentry';
 import '@/theme';
+
+initSentry();
+initAnalytics();
 
 void SplashScreen.preventAutoHideAsync();
 

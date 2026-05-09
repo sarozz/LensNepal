@@ -6,6 +6,16 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (e) — observability
+
+- `src/lib/env.ts` exposes `readEnv()` which reads `Constants.expoConfig?.extra` and returns a typed `Env` shape. Empty/whitespace strings collapse to `undefined`; `posthogHost` falls back to the EU cloud per BRIEF §9.5. The function is fully defensive against non-string extra values.
+- `src/lib/sentry.ts` ships `initSentry(): boolean`. No-ops and returns `false` when DSN is absent or empty (CLAUDE §3.9). With a DSN, calls `Sentry.init({ sendDefaultPii: false, tracesSampleRate: 0, enableAutoSessionTracking: true })` — privacy posture per BRIEF §7. Idempotent.
+- `src/lib/analytics.ts` ships `initAnalytics(): boolean`. No-ops when API key is absent. Otherwise constructs `new PostHog(apiKey, { host, personProfiles: 'identified_only', disableSurveys: true })` per BRIEF §7. Idempotent.
+- `app/_layout.tsx` calls `initSentry()` and `initAnalytics()` at module top — both no-op when env is empty so dev with no `.env` boots cleanly.
+- `app.config.ts` already forwards `EXPO_PUBLIC_*` env vars through `extra` (commit (a)). Runtime code never touches `process.env`.
+- 100 % statement coverage on all five `src/lib` files. 70 tests across 13 suites.
+- Out of scope, intentionally: `captureException`/`track`/`screen` helpers, source-maps upload, error boundary integration. None has callers in Phase 1.
+
 #### Commit (d) — storage + query
 
 - `src/lib/mmkv.ts` exposes a single MMKV instance (`id: 'kathmandu-lens'`) per Q2-A — query cache, app settings, and feature data all share one bucket. Phase 1 volume is small enough that the simpler model wins.
