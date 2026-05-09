@@ -6,6 +6,17 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (c) — i18n
+
+- `i18next` + `react-i18next` initialised in `src/i18n/index.ts` with three namespaces (`common`, `tabs`, `etiquette`) for English and Nepali. Resources bundled directly (no lazy loading; six small JSONs).
+- `detectLanguage()` reads `expo-localization.getLocales()`, returns the first supported locale code, falls back to English. Pure function, six unit tests.
+- Keyset-divergence guard (`src/i18n/keysets.test.ts`): walks both languages across all three namespaces; fails on any missing key path or empty/whitespace value. Satisfies the "en and ne keysets diverge" half of CLAUDE §4.6.
+- `i18next` `CustomTypeOptions` augmented in `src/i18n/types.ts` so `t('common.ok')`-style calls are type-checked.
+- **Translation pending (per CLAUDE §3.10):** every `ne` value is a `[NE] <english>` placeholder. These need a native-speaker review before cultural copy lands. Flagged here so the changelog acts as the queue. Empty `etiquette` namespace will be populated in commit (g).
+- **Deferred:** the "orphan keys unused" half of CLAUDE §4.6 needs source-tree introspection; staged for commit (h) "tests + Maestro" alongside the rest of the test infra.
+- **Choices recorded for the brief follow-up (per CLAUDE §3.4):** Q1-A English fallback when device locale is neither `en` nor `ne`; Q2-A empty `etiquette` namespace until commit (g); Q3-A i18next type augmentation enabled; Q4-A no language-choice persistence until MMKV lands in commit (d).
+- Verifications: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` (27 tests across 4 suites), `pnpm test:coverage` (still 100 % on `src/theme`; coverage target unchanged).
+
 #### Commit (b) — theme + fonts
 
 - Three Unistyles themes (`light`, `dark`, `outdoorBright`) wired via `StyleSheet.configure`. Tokens split into `tokens/{colors,typography,motion,spacing,elevation}.ts` per BRIEF §9.1.

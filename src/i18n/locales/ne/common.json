@@ -1,0 +1,12 @@
+{
+  "ok": "[NE] OK",
+  "cancel": "[NE] Cancel",
+  "retry": "[NE] Retry",
+  "dismiss": "[NE] Dismiss",
+  "loading": "[NE] Loading…",
+  "error": {
+    "generic": "[NE] Something went wrong.",
+    "offline": "[NE] You're offline.",
+    "tryAgain": "[NE] Try again"
+  }
+}
