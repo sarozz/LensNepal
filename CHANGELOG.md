@@ -6,6 +6,32 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (i) — docs + CI
+
+- `.github/workflows/ci.yml` ships GitHub Actions on `ubuntu-latest`. Triggers: push to non-`main` branches + PR to `main`. Steps: checkout → pnpm 9.15 → Node 22 (with pnpm cache) → `pnpm install --frozen-lockfile` → `pnpm typecheck` → `pnpm lint` → `pnpm format:check` → `pnpm test:coverage` (which enforces the 70% threshold from commit (h)). Concurrency cancel-in-progress per branch.
+- `docs/architecture.md` ships a one-page engineering pointer: module layout, provider chain (`I18nextProvider → PersistQueryClientProvider → expo-router Stack`), boot order (`StyleSheet.configure → initSentry → initAnalytics → useFirstLaunch gate`), theming, i18n posture, storage, test posture, CI, and a decisions-log pointer.
+- `README.md` gains a "CI" section, an "Architecture" pointer, and a "Cultural review checklist" the PR maintainer ticks before merging cultural-copy changes (per CLAUDE §3.10).
+- Out of scope and explicitly skipped: Maestro in CI (deferred until macOS-runner budget); EAS / source-maps upload (Phase 6 concern); branch protection rules (repo-admin, not committable); `expo-doctor` in CI (its remote checks fail behind sandbox / GitHub egress).
+- Verifications: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test:coverage` (still 79 tests across 16 suites, 100% on `src/lib` and `src/theme`).
+
+### Phase 1 — Definition of Done (per BRIEF §12)
+
+| Box | Status |
+|---|---|
+| Four-tab shell renders with placeholder screens | ✓ commit (f) |
+| Three-theme system with tokens | ✓ commit (b) |
+| i18n scaffold with en + ne | ✓ commit (c) |
+| Observability wiring (no-op without env vars) | ✓ commit (e) |
+| Offline-first storage with 24h max-age | ✓ commit (d) |
+| Cultural Etiquette primer with mandatory ack | ✓ commit (g) |
+| Tests, Maestro smoke, CI | ✓ commits (h) and (i) |
+| `pnpm typecheck && pnpm lint && pnpm test && npx expo-doctor` clean | ✓ (expo-doctor 16/18 — 2 sandbox-only network failures) |
+| Coverage ≥ 70% on `src/lib` and `src/theme` | ✓ at 100% |
+| App boots cleanly with no `.env` file | ✓ commit (e) |
+| Cultural copy reviewed by native speaker | ☐ **pending** — Kumari section especially per CLAUDE §3.10 |
+| `BRIEF.md` follow-up edit catalogued | ☐ **pending** — full deviation list in this file under each commit |
+| Maestro smoke passes on iOS sim | ☐ **pending local run** — sandbox can't host iOS sim |
+
 #### Commit (h) — tests + Maestro
 
 - `.maestro/smoke.yaml` ships the golden-path E2E flow per BRIEF §11.5 / DoD §12: launch with cleared state → first-launch etiquette gate visible → tap "I understand" → walk through Explore / Routes / Collection / Guide → re-open the etiquette modal via the `?` header button. Maestro CLI is a separate binary; install instructions added to `README.md`.

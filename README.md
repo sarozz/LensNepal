@@ -70,6 +70,25 @@ The Phase 1 flow (`.maestro/smoke.yaml`) covers the golden path: launch → firs
 
 This app concerns living religious practice. See `docs/BRIEF.md §7` and `CLAUDE.md §3.10`. The Kumari is not depicted in app imagery. Stub `[NE]` strings indicate translation pending.
 
+### Cultural review checklist (PR maintainer)
+
+Before merging any PR that touches `src/i18n/locales/**/etiquette.json` or any other cultural copy:
+
+- [ ] A native Nepali speaker has read every changed `en` body string.
+- [ ] The Kumari section, if changed, has been re-reviewed under that lens.
+- [ ] `[NE]`-prefixed Nepali stubs have been replaced with real translations, OR the PR description explicitly defers the translation pass.
+- [ ] No changed string introduces "must / should / do not" tone, per BRIEF §6.
+
+## CI
+
+`.github/workflows/ci.yml` runs on every push to non-`main` branches and every PR to `main`. The single job runs `pnpm install` + `typecheck` + `lint` + `format:check` + `test:coverage` on `ubuntu-latest`. Coverage threshold is 70 % stmts/branches/funcs/lines on `src/lib` and `src/theme`.
+
+Maestro is intentionally not run in CI for Phase 1 — it's local-only via `pnpm test:e2e` until there's budget for `macos-latest` runners.
+
+## Architecture
+
+`docs/architecture.md` is a one-page pointer covering provider chain, boot order, theming, i18n posture, and storage. Read the brief first; this is the engineering supplement.
+
 ## Contributing
 
 See `CLAUDE.md`.
