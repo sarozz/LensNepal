@@ -50,6 +50,22 @@ All optional. Code paths no-op when absent. Read via `expo-constants → expoCon
 | `EXPO_PUBLIC_POSTHOG_API_KEY` | PostHog init |
 | `EXPO_PUBLIC_POSTHOG_HOST` | PostHog host (default: `https://eu.i.posthog.com`) |
 
+## Running the E2E smoke flow
+
+Maestro is a separate CLI, not an npm package. Install it once on the host:
+
+```bash
+curl -Ls "https://get.maestro.mobile.dev" | bash
+```
+
+Then, with the app installed on a running simulator or device:
+
+```bash
+pnpm test:e2e
+```
+
+The Phase 1 flow (`.maestro/smoke.yaml`) covers the golden path: launch → first-launch etiquette gate → "I understand" → land on Explore → walk through the four tabs → re-open the etiquette modal via the `?` header button.
+
 ## Cultural posture
 
 This app concerns living religious practice. See `docs/BRIEF.md §7` and `CLAUDE.md §3.10`. The Kumari is not depicted in app imagery. Stub `[NE]` strings indicate translation pending.

@@ -6,6 +6,20 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (h) — tests + Maestro
+
+- `.maestro/smoke.yaml` ships the golden-path E2E flow per BRIEF §11.5 / DoD §12: launch with cleared state → first-launch etiquette gate visible → tap "I understand" → walk through Explore / Routes / Collection / Guide → re-open the etiquette modal via the `?` header button. Maestro CLI is a separate binary; install instructions added to `README.md`.
+- `src/i18n/orphans.test.ts` delivers the deferred half of CLAUDE §4.6 ("test fails if any orphan keys are unused"). Static regex over `src/` + `app/` that:
+  - walks each file's `useTranslation()` declarations to map `t`-aliases to candidate namespaces (keeping a list per alias to handle multi-namespace files like `app/(tabs)/_layout.tsx`),
+  - extracts every static `t('key')` / `t("key")` / `t(\`key\`)` call,
+  - skips template literals containing `${}` (handled by the explicit DYNAMIC_KEY_ALLOWLIST),
+  - hard-fails on both true orphans and undefined refs.
+- A `RESERVED_ORPHANS` allowlist holds the action-verb keys seeded in commit (c) that don't have callsites yet (`ok`, `cancel`, `retry`, `dismiss`, `loading`, `error.{generic,offline,tryAgain}`). Each entry should graduate out of the list when a real caller appears. A second test guards that the allowlist itself doesn't go stale (every entry still defined in `en/*.json`).
+- `jest.config.js` gains `coverageThreshold` of 70 % stmts/branches/funcs/lines on `src/lib` and `src/theme`. We're at 100 % so the threshold is a floor against future regression, not a stretch.
+- `README.md` adds a "Running the E2E smoke flow" subsection.
+- New devDep: `@types/node@^22.0.0` so the orphan test can use `node:fs` / `node:path` (peer-dep style — added with the same handling as `@types/jest`/`@babel/core`).
+- Verifications: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` (79 tests across 16 suites), `pnpm test:coverage` (still 100 % on tracked dirs).
+
 #### Commit (g) — etiquette primer
 
 - Five-section primer per BRIEF §3.5: photography, footwear, silence, sacred objects, the Kumari clause. English copy authored to BRIEF §6 tone (present tense, observational, ≤80 words per body, no "must/should/do not"). **Cultural review still pending — especially the Kumari section per CLAUDE §3.10.**
