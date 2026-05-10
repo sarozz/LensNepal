@@ -7,6 +7,8 @@
   "placeholder": "Coming soon.",
   "notFound": "We can't find that screen.",
   "backToStart": "Back to start",
+  "openEtiquette": "Open cultural etiquette guide",
+  "helpGlyph": "?",
   "error": {
     "generic": "Something went wrong.",
     "offline": "You're offline.",

@@ -1,7 +1,7 @@
 import { storage } from './mmkv';
 
 export const STORAGE_KEYS = {
-  hasSeenEtiquette: 'hasSeenEtiquette',
+  hasAcknowledgedEtiquette: 'hasAcknowledgedEtiquette',
   preferredLanguage: 'preferredLanguage',
   preferredTheme: 'preferredTheme',
 } as const;

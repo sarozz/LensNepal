@@ -1,6 +1,24 @@
-import { Tabs } from 'expo-router';
+import { Tabs, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
+import { Pressable, Text } from '@/components/primitives';
 import { useTheme } from '@/hooks/useTheme';
+
+function HelpButton() {
+  const router = useRouter();
+  const { t } = useTranslation('common');
+  return (
+    <Pressable
+      onPress={() => router.push('/etiquette')}
+      accessibilityLabel={t('openEtiquette')}
+      accessibilityRole="button"
+      style={{ paddingHorizontal: 16, paddingVertical: 4 }}
+    >
+      <Text variant="title2" color="accent">
+        {t('helpGlyph')}
+      </Text>
+    </Pressable>
+  );
+}
 
 export default function TabsLayout() {
   const { t } = useTranslation('tabs');
@@ -9,7 +27,11 @@ export default function TabsLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
+        headerStyle: { backgroundColor: theme.colors.surface },
+        headerTitleStyle: { color: theme.colors.ink },
+        headerShadowVisible: false,
+        headerRight: () => <HelpButton />,
         tabBarActiveTintColor: theme.colors.accent,
         tabBarInactiveTintColor: theme.colors.inkSubtle,
         tabBarStyle: {

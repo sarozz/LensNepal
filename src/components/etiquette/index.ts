@@ -1,0 +1,1 @@
+export { EtiquetteSection } from './EtiquetteSection';

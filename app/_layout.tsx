@@ -4,6 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { I18nextProvider } from 'react-i18next';
 import { useAppFonts } from '@/hooks/useAppFonts';
+import { useFirstLaunch } from '@/hooks/useFirstLaunch';
 import { i18n } from '@/i18n';
 import { initAnalytics } from '@/lib/analytics';
 import { persistOptions, queryClient } from '@/lib/query-client';
@@ -17,6 +18,7 @@ void SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const { loaded, error } = useAppFonts();
+  const { acknowledged } = useFirstLaunch();
 
   useEffect(() => {
     if (loaded || error) {
@@ -31,9 +33,15 @@ export default function RootLayout() {
   return (
     <I18nextProvider i18n={i18n}>
       <PersistQueryClientProvider client={queryClient} persistOptions={persistOptions}>
-        <Stack screenOptions={{ headerShown: false }}>
+        <Stack
+          initialRouteName={acknowledged ? '(tabs)' : 'etiquette'}
+          screenOptions={{ headerShown: false }}
+        >
           <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="etiquette" options={{ presentation: 'modal' }} />
+          <Stack.Screen
+            name="etiquette"
+            options={{ presentation: 'modal', gestureEnabled: acknowledged }}
+          />
           <Stack.Screen name="+not-found" />
         </Stack>
       </PersistQueryClientProvider>

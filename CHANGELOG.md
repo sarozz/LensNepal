@@ -6,6 +6,18 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (g) — etiquette primer
+
+- Five-section primer per BRIEF §3.5: photography, footwear, silence, sacred objects, the Kumari clause. English copy authored to BRIEF §6 tone (present tense, observational, ≤80 words per body, no "must/should/do not"). **Cultural review still pending — especially the Kumari section per CLAUDE §3.10.**
+- `src/hooks/useFirstLaunch.ts` reads `hasAcknowledgedEtiquette` from MMKV and exposes `acknowledge()` to flip it. Synchronous initial state from MMKV — no async hydration glitch.
+- Storage key renamed `hasSeenEtiquette` → `hasAcknowledgedEtiquette` to match BRIEF §3.5. No data migration needed (no production data yet).
+- Mandatory first-launch gate: `app/_layout.tsx` sets `Stack` `initialRouteName="etiquette"` when not yet acknowledged, and `gestureEnabled: acknowledged` so the modal can't be swiped past on first launch.
+- Once "I understand" is tapped, `acknowledge()` writes MMKV and `router.replace('/(tabs)/explore')` lands the user on the tab shell.
+- `?` button added as `headerRight` on the tabs layout per BRIEF §4 — pushes `/etiquette` from any tab. Accessibility label `"Open cultural etiquette guide"` ships in `common.openEtiquette`. The visible `?` glyph itself goes through i18n (`common.helpGlyph`) per CLAUDE §3.5 (no hardcoded user-visible strings, exception list empty).
+- New presentational component `src/components/etiquette/EtiquetteSection` with hairline divider — matches "hairlines, not boxes" principle (§5.1).
+- All `ne` strings ship as `[NE]`-prefixed stubs flagged translation-pending. Keysets stay aligned (`keysets.test.ts` enforces this on every commit).
+- Verifications: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` (76 tests across 15 suites), `pnpm test:coverage` (100% on `src/lib` and `src/theme`).
+
 #### Commit (e) — observability
 
 - `src/lib/env.ts` exposes `readEnv()` which reads `Constants.expoConfig?.extra` and returns a typed `Env` shape. Empty/whitespace strings collapse to `undefined`; `posthogHost` falls back to the EU cloud per BRIEF §9.5. The function is fully defensive against non-string extra values.

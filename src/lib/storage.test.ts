@@ -15,10 +15,10 @@ describe('storage', () => {
   });
 
   it('round-trips booleans', () => {
-    setBoolean('hasSeenEtiquette', true);
-    expect(getBoolean('hasSeenEtiquette')).toBe(true);
-    setBoolean('hasSeenEtiquette', false);
-    expect(getBoolean('hasSeenEtiquette')).toBe(false);
+    setBoolean('hasAcknowledgedEtiquette', true);
+    expect(getBoolean('hasAcknowledgedEtiquette')).toBe(true);
+    setBoolean('hasAcknowledgedEtiquette', false);
+    expect(getBoolean('hasAcknowledgedEtiquette')).toBe(false);
   });
 
   it('round-trips strings', () => {
@@ -27,7 +27,7 @@ describe('storage', () => {
   });
 
   it('returns undefined for unset keys', () => {
-    expect(getBoolean('hasSeenEtiquette')).toBeUndefined();
+    expect(getBoolean('hasAcknowledgedEtiquette')).toBeUndefined();
     expect(getString('preferredLanguage')).toBeUndefined();
   });
 
@@ -40,11 +40,11 @@ describe('storage', () => {
   });
 
   it('clear() empties everything', () => {
-    setBoolean('hasSeenEtiquette', true);
+    setBoolean('hasAcknowledgedEtiquette', true);
     setString('preferredLanguage', 'ne');
     setString('preferredTheme', 'outdoorBright');
     clear();
-    expect(getBoolean('hasSeenEtiquette')).toBeUndefined();
+    expect(getBoolean('hasAcknowledgedEtiquette')).toBeUndefined();
     expect(getString('preferredLanguage')).toBeUndefined();
     expect(getString('preferredTheme')).toBeUndefined();
   });

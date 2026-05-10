@@ -1,1 +1,29 @@
-{}
+{
+  "title": "[NE] Before you wander.",
+  "intro": "[NE] Kathmandu's old temples remain a living centre. Five practices help visitors move through them quietly.",
+  "sections": {
+    "photography": {
+      "title": "[NE] Photography",
+      "body": "[NE] Most public temple courtyards welcome cameras. Inner sanctums and active puja do not — phones return to pockets there. Portraits sometimes follow an invitation, and sometimes a quiet refusal. We notice the answer before we lift the camera. Priests in trance, the bereaved at cremations, and the Kumari are not photographed. The Kumari Ghar exterior is fine; the goddess herself is not."
+    },
+    "footwear": {
+      "title": "[NE] Footwear",
+      "body": "[NE] Shoes come off at any threshold marked by an offering platform, a row of others' shoes, or a small stone trough. Inside Newari courtyards, the visit continues in socks or barefoot. Outside, shoes return. No one announces the change — we follow the example of the people already there."
+    },
+    "silence": {
+      "title": "[NE] Silence",
+      "body": "[NE] Temple courtyards keep their own quiet. Drums, bells, and chant come and go; we listen rather than add to them. Phones stay silent. Conversations soften. During puja, the visitor waits at the edge until the priest signals the moment is finished."
+    },
+    "sacredObjects": {
+      "title": "[NE] Sacred objects",
+      "body": "[NE] Bells are rung once, gently, on entry. Lamps are lit, not extinguished. Offerings — flowers, rice, tika — stay where they were placed. Statues are touched only on invitation. Circumambulation moves clockwise, with the right shoulder always toward the shrine."
+    },
+    "kumari": {
+      "title": "[NE] If you accidentally photograph the Kumari",
+      "body": "[NE] The Kumari is the goddess incarnate. Her family alone photograph her. A tourist's accidental photo is deleted, kept off other devices, kept off social posts. There is no apology to make aloud — only a quiet correction. The image is removed; the visit continues."
+    }
+  },
+  "acknowledge": {
+    "cta": "[NE] I understand"
+  }
+}
