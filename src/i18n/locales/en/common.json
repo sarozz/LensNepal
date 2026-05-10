@@ -9,6 +9,15 @@
   "backToStart": "Back to start",
   "openEtiquette": "Open cultural etiquette guide",
   "helpGlyph": "?",
+  "close": "Close",
+  "closeGlyph": "×",
+  "theme": {
+    "sectionTitle": "Theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "outdoorBright": "Outdoor"
+  },
   "error": {
     "generic": "Something went wrong.",
     "offline": "You're offline.",

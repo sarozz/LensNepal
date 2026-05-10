@@ -1,0 +1,50 @@
+import { useTranslation } from 'react-i18next';
+import { Pressable, Stack, Text } from '@/components/primitives';
+import { useTheme } from '@/hooks/useTheme';
+import { type ThemeMode, useThemePreference } from '@/hooks/useThemePreference';
+
+const MODES: ReadonlyArray<ThemeMode> = ['system', 'light', 'dark', 'outdoorBright'];
+
+export function ThemeSwitcher() {
+  const theme = useTheme();
+  const { t } = useTranslation('common');
+  const { mode, setMode } = useThemePreference();
+
+  const labels: Record<ThemeMode, string> = {
+    system: t('theme.system'),
+    light: t('theme.light'),
+    dark: t('theme.dark'),
+    outdoorBright: t('theme.outdoorBright'),
+  };
+
+  return (
+    <Stack gap="sm">
+      <Text variant="title3">{t('theme.sectionTitle')}</Text>
+      <Stack direction="row" gap="sm">
+        {MODES.map((m) => {
+          const active = mode === m;
+          return (
+            <Pressable
+              key={m}
+              onPress={() => setMode(m)}
+              accessibilityRole="button"
+              accessibilityState={{ selected: active }}
+              accessibilityLabel={labels[m]}
+              style={{
+                borderWidth: 1,
+                borderColor: active ? theme.colors.accent : theme.colors.border,
+                borderRadius: theme.radius.sm,
+                paddingHorizontal: theme.spacing.md,
+                paddingVertical: theme.spacing.sm,
+              }}
+            >
+              <Text variant="footnote" color={active ? 'accent' : 'inkMuted'}>
+                {labels[m]}
+              </Text>
+            </Pressable>
+          );
+        })}
+      </Stack>
+    </Stack>
+  );
+}

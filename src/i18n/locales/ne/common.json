@@ -9,6 +9,15 @@
   "backToStart": "[NE] Back to start",
   "openEtiquette": "[NE] Open cultural etiquette guide",
   "helpGlyph": "?",
+  "close": "[NE] Close",
+  "closeGlyph": "×",
+  "theme": {
+    "sectionTitle": "[NE] Theme",
+    "system": "[NE] System",
+    "light": "[NE] Light",
+    "dark": "[NE] Dark",
+    "outdoorBright": "[NE] Outdoor"
+  },
   "error": {
     "generic": "[NE] Something went wrong.",
     "offline": "[NE] You're offline.",

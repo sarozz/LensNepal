@@ -8,6 +8,12 @@ jest.mock('react-native-unistyles', () => {
       create: (input: unknown) => input,
     },
     useUnistyles: () => ({ theme: themes.lightTheme, rt: {} }),
+    UnistylesRuntime: {
+      setTheme: jest.fn(),
+      setAdaptiveThemes: jest.fn(),
+      themeName: 'light',
+      hasAdaptiveThemes: true,
+    },
   };
 });
 

@@ -6,6 +6,24 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (j) — UI polish
+
+A direct response to a candid UI/UX review against BRIEF §5.1's principles ("hairlines, not boxes" / "one accent used sparingly" / "quiet over loud"). Five targeted fixes:
+
+- **Outlined `Button` primitive** at `src/components/primitives/Button.tsx`. 1 dp accent border, accent-coloured label, no fill — replaces the solid terracotta CTA the etiquette modal previously rendered. Single variant for Phase 1; expands when callers demand more.
+- **`SafeAreaProvider` at the root** plus `SafeAreaView` on the etiquette modal and `+not-found` screen. Fixes a real bug where modal content collided with notch / home-indicator on real devices. `react-native-safe-area-context` was installed since commit (a) but unused until now.
+- **Theme switcher reachable from the Guide tab.** New `useThemePreference()` hook persists `preferredTheme` to MMKV (key was pre-declared in commit (d)) and applies it via `UnistylesRuntime.setTheme` / `setAdaptiveThemes`. Four-mode `ThemeSwitcher` component: **System** (auto, OS-driven) / Light / Dark / Outdoor. Per Q-A in commit-(j) plan, "System" defers to OS appearance via adaptive themes; the other three are explicit overrides that disable adaptive. `outdoorBright` was unreachable from UI before this commit.
+- **Modal close button.** Top-right `×` `Pressable` on the etiquette modal — visible only when `acknowledged === true` so first-launch users still cannot bypass the gate. Helps Android users where swipe-down-to-dismiss isn't a learned gesture.
+- **Etiquette intro typography lift.** Changed intro `<Text>` colour from `inkMuted` → `ink` and added a `2xl` top padding above the title. Achieves visual hierarchy via colour shift + spacing rather than introducing an 11th typography token outside BRIEF §5.3's defined ten.
+
+New i18n keys: `common.close`, `common.closeGlyph`, `common.theme.{sectionTitle,system,light,dark,outdoorBright}`. Both languages aligned; `[NE]`-prefixed for the Nepali stubs per CLAUDE §3.10.
+
+`jest.setup.ts` adds `UnistylesRuntime` mock so `useThemePreference` and `ThemeSwitcher` render in jsdom. Stable `jest.fn()` references via the global mock so tests can assert against `setTheme` / `setAdaptiveThemes` calls.
+
+Verifications: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` — **92 tests across 19 suites**, all green. `pnpm test:coverage` still 100 % on `src/lib` and `src/theme`.
+
+Out of scope (intentional, deferred): tab bar icons, custom motion using BRIEF §5.4 tokens, lead-text typography variant, font binaries, custom tab bar component, settings screen.
+
 #### Commit (i) — docs + CI
 
 - `.github/workflows/ci.yml` ships GitHub Actions on `ubuntu-latest`. Triggers: push to non-`main` branches + PR to `main`. Steps: checkout → pnpm 9.15 → Node 22 (with pnpm cache) → `pnpm install --frozen-lockfile` → `pnpm typecheck` → `pnpm lint` → `pnpm format:check` → `pnpm test:coverage` (which enforces the 70% threshold from commit (h)). Concurrency cancel-in-progress per branch.
