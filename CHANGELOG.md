@@ -6,6 +6,31 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 2 — Browse the valley's elements (in progress)
 
+#### Commit (r) — Collection tab: save and revisit
+
+The Collection tab moves from placeholder to a working journal. Users can save any element or route from its detail page; saved items live in AsyncStorage and surface in the Collection tab newest-first. Tapping a saved item opens its detail page. A "Clear all" link wipes the lot.
+
+**New**
+- `src/features/collection/CollectionContext.tsx` — Provider + `useCollection()` hook. Holds the saved-items list, hydrates from AsyncStorage on mount, exposes `isSaved` / `save` / `remove` / `clear` (all async writes; sync reads from in-memory state). Defensive JSON parsing — drops malformed items rather than throwing. Single AsyncStorage key (`collection`) holds a JSON array.
+- `src/features/collection/index.ts` — barrel.
+- `src/i18n/locales/{en,ne}/collection.json` — UI strings (`browse.title/intro/empty`, `save`, `saved`, `clearAll`, `kind.{element,route}`).
+
+**Modified**
+- `app/_layout.tsx` — wraps the tree in `<CollectionProvider>` between `I18nextProvider` and `PersistQueryClientProvider`.
+- `app/element/[id].tsx` — Save toggle (outlined Button) after the context paragraph. Label swaps `"Save"` ↔ `"Saved"` based on collection state. Tapping toggles the entry.
+- `app/route/[id].tsx` — same Save toggle below the tips section.
+- `app/(tabs)/collection.tsx` — replaced "Coming soon." with a real screen: empty state when nothing saved, otherwise list of `ElementRow`/`RouteRow` (kind label + title + one-line). Tap → push the matching detail screen. "Clear all" link at the bottom (danger colour).
+- `src/i18n/types.ts` + `src/i18n/index.ts` — added `collection` namespace.
+- `src/i18n/keysets.test.ts` — walks the new namespace.
+- `src/i18n/orphans.test.ts` — added `collection:kind.element` and `collection:kind.route` to the DYNAMIC_KEY_ALLOWLIST (`t(\`kind.${item.kind}\`)`).
+
+**Architecture notes**
+- Shared Context (not Zustand, not React Query) is the right shape for this — one app-wide list, infrequent writes, no server reconciliation.
+- Stale or invalid saved items (e.g., an ID removed from the dataset) are filtered out at render time via `isElementId` / `isRouteId` guards. The orphaned entries stay in storage but never show up; future cleanup could prune them.
+- The CollectionContext sits outside the React Query provider so the Collection tab works even if the persistor hasn't restored yet.
+
+**Verifications** — `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` all green. **94 tests across 19 suites**.
+
 #### Commit (q) — Routes browse: three curated walks
 
 Same pattern as the elements browse from commit (p). Routes tab moves from placeholder to real content. No native map, no GPS — text content only, Expo Go-compatible.

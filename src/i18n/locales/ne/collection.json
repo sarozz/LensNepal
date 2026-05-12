@@ -1,0 +1,14 @@
+{
+  "browse": {
+    "title": "[NE] Your collection",
+    "intro": "[NE] Elements and walks you've kept come back here.",
+    "empty": "[NE] Nothing saved yet. Tap the bookmark on anything you want to come back to."
+  },
+  "save": "[NE] Save",
+  "saved": "[NE] Saved",
+  "clearAll": "[NE] Clear all",
+  "kind": {
+    "element": "[NE] Element",
+    "route": "[NE] Walk"
+  }
+}

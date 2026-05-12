@@ -2,7 +2,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Pressable, Stack, Surface, Text } from '@/components/primitives';
+import { Button, Pressable, Stack, Surface, Text } from '@/components/primitives';
+import { useCollection } from '@/features/collection';
 import { isRouteId, ROUTE_META } from '@/features/routes';
 import { useTheme } from '@/hooks/useTheme';
 
@@ -11,7 +12,9 @@ export default function RouteDetail() {
   const router = useRouter();
   const { t } = useTranslation('routes');
   const { t: tCommon } = useTranslation('common');
+  const { t: tCollection } = useTranslation('collection');
   const theme = useTheme();
+  const { isSaved, save, remove } = useCollection();
 
   const id = params.id ?? '';
   if (!isRouteId(id)) {
@@ -37,6 +40,12 @@ export default function RouteDetail() {
   const description = t(`routes.${id}.description`);
   const whenToGo = t(`routes.${id}.whenToGo`);
   const tips = t(`routes.${id}.tips`);
+  const saved = isSaved('route', id);
+
+  const toggle = async () => {
+    if (saved) await remove('route', id);
+    else await save('route', id);
+  };
 
   return (
     <Surface background="bg" style={{ flex: 1 }}>
@@ -72,6 +81,12 @@ export default function RouteDetail() {
           <Text variant="body" color="inkMuted">
             {tips}
           </Text>
+        </Stack>
+        <Stack padding="xl">
+          <Button
+            label={saved ? tCollection('saved') : tCollection('save')}
+            onPress={() => void toggle()}
+          />
         </Stack>
       </ScrollView>
     </Surface>

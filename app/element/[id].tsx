@@ -2,7 +2,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Pressable, Stack, Surface, Text } from '@/components/primitives';
+import { Button, Pressable, Stack, Surface, Text } from '@/components/primitives';
+import { useCollection } from '@/features/collection';
 import { ELEMENT_META, isElementId } from '@/features/elements';
 import { useTheme } from '@/hooks/useTheme';
 
@@ -11,7 +12,9 @@ export default function ElementDetail() {
   const router = useRouter();
   const { t } = useTranslation('elements');
   const { t: tCommon } = useTranslation('common');
+  const { t: tCollection } = useTranslation('collection');
   const theme = useTheme();
+  const { isSaved, save, remove } = useCollection();
 
   const id = params.id ?? '';
   if (!isElementId(id)) {
@@ -36,6 +39,12 @@ export default function ElementDetail() {
   const oneLine = t(`elements.${id}.oneLine`);
   const context = t(`elements.${id}.context`);
   const sourceLabel = t(element.source.labelKey);
+  const saved = isSaved('element', id);
+
+  const toggle = async () => {
+    if (saved) await remove('element', id);
+    else await save('element', id);
+  };
 
   return (
     <Surface background="bg" style={{ flex: 1 }}>
@@ -55,6 +64,12 @@ export default function ElementDetail() {
           <Text variant="body" color="inkMuted">
             {context}
           </Text>
+        </Stack>
+        <Stack padding="xl">
+          <Button
+            label={saved ? tCollection('saved') : tCollection('save')}
+            onPress={() => void toggle()}
+          />
         </Stack>
         <Stack padding="xl" gap="xs">
           <Text variant="footnote" color="inkSubtle">
