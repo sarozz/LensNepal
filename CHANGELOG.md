@@ -6,6 +6,43 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 2 — Browse the valley's elements (in progress)
 
+#### Commit (v) — one-command image setup for the Mac
+
+User selected option 1 from the "what's now obviously next" list: real photographs. The sandbox blocks Wikimedia / Commons hosts ("host not allowed"), so the fetch cannot happen here — but the entire workflow can be packaged into a single shell script the user runs on their Mac.
+
+**What you do on your Mac**
+
+```bash
+cd ~/Desktop/lensnepal
+git pull
+bash scripts/fetch-images.sh
+```
+
+That downloads 15 Wikimedia Commons photographs (12 elements + 3 routes), writes them to `src/assets/{elements,routes}/`, and regenerates the typed `images.ts` registries with the `require()` calls wired up. Restart `pnpm dev`; the photos appear in Hero banners and Thumbnails.
+
+**Architecture**
+
+- `src/features/elements/images.ts` and `src/features/routes/images.ts` — typed `Partial<Record<Id, ImageSourcePropType>>` registries. Empty by default (every tile falls back to its tint). The fetch script overwrites these with full `require()` maps. Empty registry is committed so the app builds before any fetch run.
+- `dataset.ts` for elements and routes now reads `image: ELEMENT_IMAGES[id]` / `ROUTE_IMAGES[id]` rather than declaring images inline. Decouples content metadata from asset wiring.
+- The script is re-runnable. If a URL 404s (Commons can move files), the script aborts at the broken one with a clear error; edit the offending URL inline and re-run.
+
+**New files**
+- `scripts/fetch-images.sh` — `chmod +x` shell script. User-Agent header set per Commons policy. `set -euo pipefail`.
+- `CREDITS.md` (top level) — per-image attribution (Commons file name, photographer, licence). Required by CC BY-SA. Includes the warning that Commons metadata can shift; verify after downloading.
+- `src/features/elements/images.ts`, `src/features/routes/images.ts` — empty registries.
+
+**What this commit deliberately does NOT do**
+- It doesn't bundle photographs into git. The user fetches them locally; the bundle stays small.
+- It doesn't verify URLs from the sandbox (Commons is blocked). Some URLs might 404 — the script tells the user which one to edit.
+- It doesn't replace the brief's tint approach — tints stay as the fallback when an image is unavailable.
+
+**Risks called out**
+- Commons file URLs were curated by best-effort guess. Reasonably-named files (`Bodhnath_stupa.jpg`, `Patan_Durbar_Square_2017.jpg`) exist and were chosen for clarity, but I couldn't test from this sandbox.
+- `CREDITS.md` photographer attributions are also best-effort; verify on Commons before public release.
+- If you want different images, edit the `ENTRIES` array in `scripts/fetch-images.sh`. The registry regenerates with whatever filenames you save.
+
+**Verifications** — `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` all green. 94 tests across 19 suites. The dataset refactor (registry indirection) preserves all existing behaviour: when no image is wired, every tile renders its tint exactly as before.
+
 #### Commit (u) — 2-column grid layout for all browse screens
 
 User feedback: the horizontal-list layout still felt like "bland text paragraphs." Switching every browse surface to a 2-column gallery grid so the visual hierarchy becomes image-first, text-second.

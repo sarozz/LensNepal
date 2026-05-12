@@ -1,4 +1,5 @@
 import type { ImageSourcePropType } from 'react-native';
+import { ELEMENT_IMAGES } from './images';
 
 export const ELEMENTS = [
   'boudha',
@@ -24,7 +25,9 @@ export type ElementMeta = {
   source: { url: string; labelKey: 'sources.wikipedia' };
 };
 
-export const ELEMENT_META: Record<ElementId, ElementMeta> = {
+type ElementSeed = Omit<ElementMeta, 'image'>;
+
+const SEED: Record<ElementId, ElementSeed> = {
   boudha: {
     id: 'boudha',
     tint: '#F2EDE4',
@@ -116,6 +119,10 @@ export const ELEMENT_META: Record<ElementId, ElementMeta> = {
     },
   },
 };
+
+export const ELEMENT_META: Record<ElementId, ElementMeta> = Object.fromEntries(
+  ELEMENTS.map((id) => [id, { ...SEED[id], image: ELEMENT_IMAGES[id] }]),
+) as Record<ElementId, ElementMeta>;
 
 export function isElementId(value: string): value is ElementId {
   return (ELEMENTS as ReadonlyArray<string>).includes(value);
