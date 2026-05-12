@@ -1,32 +1,39 @@
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { Pressable, Stack, Surface, Text } from '@/components/primitives';
-import { type ElementId, ELEMENTS } from '@/features/elements';
+import { Thumbnail } from '@/components';
+import { type ElementId, ELEMENT_META, ELEMENTS } from '@/features/elements';
 import { useTheme } from '@/hooks/useTheme';
 
 function ElementCard({ id, onPress }: { id: ElementId; onPress: () => void }) {
   const { t } = useTranslation('elements');
   const theme = useTheme();
+  const meta = ELEMENT_META[id];
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={t(`elements.${id}.title`)}
       style={{
+        flexDirection: 'row',
+        gap: theme.spacing.md,
         borderWidth: 1,
         borderColor: theme.colors.border,
         borderRadius: theme.radius.md,
         backgroundColor: theme.colors.surface,
-        padding: theme.spacing.lg,
+        padding: theme.spacing.md,
       }}
     >
-      <Stack gap="xs">
-        <Text variant="title2">{t(`elements.${id}.title`)}</Text>
-        <Text variant="body" color="inkMuted">
-          {t(`elements.${id}.oneLine`)}
-        </Text>
-      </Stack>
+      <Thumbnail tint={meta.tint} image={meta.image} size={64} />
+      <View style={{ flex: 1 }}>
+        <Stack gap="xs">
+          <Text variant="title2">{t(`elements.${id}.title`)}</Text>
+          <Text variant="body" color="inkMuted">
+            {t(`elements.${id}.oneLine`)}
+          </Text>
+        </Stack>
+      </View>
     </Pressable>
   );
 }

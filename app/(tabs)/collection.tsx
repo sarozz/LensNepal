@@ -1,21 +1,24 @@
 import { useRouter } from 'expo-router';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import { Thumbnail } from '@/components';
 import { Pressable, Stack, Surface, Text } from '@/components/primitives';
 import { useCollection } from '@/features/collection';
-import { type ElementId, isElementId } from '@/features/elements';
-import { isRouteId, type RouteId } from '@/features/routes';
+import { type ElementId, ELEMENT_META, isElementId } from '@/features/elements';
+import { isRouteId, ROUTE_META, type RouteId } from '@/features/routes';
 import { useTheme } from '@/hooks/useTheme';
 
 type RowProps = {
   kindLabel: string;
   title: string;
   summary: string;
+  tint: string;
+  image?: Parameters<typeof Thumbnail>[0]['image'];
   onOpen: () => void;
 };
 
-function SavedRow({ kindLabel, title, summary, onOpen }: RowProps) {
+function SavedRow({ kindLabel, title, summary, tint, image, onOpen }: RowProps) {
   const theme = useTheme();
   return (
     <Pressable
@@ -23,22 +26,27 @@ function SavedRow({ kindLabel, title, summary, onOpen }: RowProps) {
       accessibilityRole="button"
       accessibilityLabel={title}
       style={{
+        flexDirection: 'row',
+        gap: theme.spacing.md,
         borderWidth: 1,
         borderColor: theme.colors.border,
         borderRadius: theme.radius.md,
         backgroundColor: theme.colors.surface,
-        padding: theme.spacing.lg,
+        padding: theme.spacing.md,
       }}
     >
-      <Stack gap="xs">
-        <Text variant="footnote" color="inkSubtle">
-          {kindLabel}
-        </Text>
-        <Text variant="title2">{title}</Text>
-        <Text variant="body" color="inkMuted">
-          {summary}
-        </Text>
-      </Stack>
+      <Thumbnail tint={tint} image={image} size={64} />
+      <View style={{ flex: 1 }}>
+        <Stack gap="xs">
+          <Text variant="footnote" color="inkSubtle">
+            {kindLabel}
+          </Text>
+          <Text variant="title2">{title}</Text>
+          <Text variant="body" color="inkMuted">
+            {summary}
+          </Text>
+        </Stack>
+      </View>
     </Pressable>
   );
 }
@@ -46,11 +54,14 @@ function SavedRow({ kindLabel, title, summary, onOpen }: RowProps) {
 function ElementRow({ id, onOpen }: { id: ElementId; onOpen: () => void }) {
   const { t } = useTranslation('elements');
   const { t: tCollection } = useTranslation('collection');
+  const meta = ELEMENT_META[id];
   return (
     <SavedRow
       kindLabel={tCollection('kind.element')}
       title={t(`elements.${id}.title`)}
       summary={t(`elements.${id}.oneLine`)}
+      tint={meta.tint}
+      image={meta.image}
       onOpen={onOpen}
     />
   );
@@ -59,11 +70,14 @@ function ElementRow({ id, onOpen }: { id: ElementId; onOpen: () => void }) {
 function RouteRow({ id, onOpen }: { id: RouteId; onOpen: () => void }) {
   const { t } = useTranslation('routes');
   const { t: tCollection } = useTranslation('collection');
+  const meta = ROUTE_META[id];
   return (
     <SavedRow
       kindLabel={tCollection('kind.route')}
       title={t(`routes.${id}.title`)}
       summary={t(`routes.${id}.oneLine`)}
+      tint={meta.tint}
+      image={meta.image}
       onOpen={onOpen}
     />
   );

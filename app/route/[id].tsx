@@ -2,6 +2,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Hero } from '@/components';
 import { Button, Pressable, Stack, Surface, Text } from '@/components/primitives';
 import { useCollection } from '@/features/collection';
 import { isRouteId, ROUTE_META } from '@/features/routes';
@@ -49,12 +50,8 @@ export default function RouteDetail() {
 
   return (
     <Surface background="bg" style={{ flex: 1 }}>
-      <ScrollView
-        contentContainerStyle={{
-          paddingTop: theme.spacing['2xl'],
-          paddingBottom: theme.spacing['2xl'],
-        }}
-      >
+      <ScrollView contentContainerStyle={{ paddingBottom: theme.spacing['2xl'] }}>
+        <Hero tint={meta.tint} image={meta.image} accessibilityLabel={title} />
         <Stack padding="xl" gap="md">
           <Text variant="display">{title}</Text>
           <Text variant="body" color="ink">

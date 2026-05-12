@@ -6,6 +6,48 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 2 — Browse the valley's elements (in progress)
 
+#### Commit (s) — visual lift: tints, thumbnails, heroes, image pipeline
+
+Direct response to user feedback ("looks so basic, no images"). Lifts the visible surface from bordered-text cards to image-ready cards with per-element visual identity. Real photos can be dropped in on the Mac without code changes beyond a `require()`.
+
+**Tint per element / per route**
+Each entry now carries a `tint` colour pulled from or adjacent to the palette:
+
+| Entry | Tint |
+| --- | --- |
+| Boudha Stupa | `#F2EDE4` (cream — the white dome) |
+| Pashupatinath | `#A8331C` (deep terracotta — saffron / cremation) |
+| Swayambhu eyes | `#2E5C8A` (lapis — focus token, the lookout) |
+| Stone lions | `#A89B85` (Newari stone) |
+| Lotus motif | `#C9A227` (warning token — gilt) |
+| Patan dawn walk | `#E8B89C` (accentMuted — dawn light) |
+| Boudha kora | `#F2EDE4` (matches the stupa) |
+| Swayambhu climb | `#5F8A6E` (hill green) |
+
+**Image pipeline**
+Each entry now has an optional `image?: ImageSourcePropType | undefined` field. When set via `require('@/assets/elements/<id>.jpg')`, the image renders. When absent, the same dimensions render as the tint colour — graceful degradation.
+
+**New components**
+- `src/components/Thumbnail.tsx` — 64 dp square, image-or-tint
+- `src/components/Hero.tsx` — full-width band (default 220 dp), image-or-tint
+- Both exported via `src/components/index.ts`
+
+**Modified screens**
+- `app/(tabs)/explore.tsx` — element cards now have a Thumbnail on the left, title + one-line on the right
+- `app/(tabs)/routes.tsx` — same treatment for routes (plus distance · duration on a third line)
+- `app/(tabs)/collection.tsx` — saved rows show the appropriate thumbnail (element or route)
+- `app/element/[id].tsx` — Hero band at the top, then title + body
+- `app/route/[id].tsx` — same
+
+**`src/assets/README.md`** documents file conventions (1:1, ≥ 600 px), expected filenames per id, wire-up snippet, attribution requirements (Wikimedia Commons CC, own photos, written-permission images). Reiterates the Kumari-not-photographed rule from CLAUDE §3.10.
+
+**What this is not**
+- Doesn't ship actual photographs (sandbox blocks Commons / Flickr / Google).
+- Doesn't add multiple sources per element (that's the proposed next commit).
+- Doesn't add notes on saved items or cross-linking (commit after that).
+
+**Verifications** — `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` all green. 94 tests across 19 suites. Honoring `exactOptionalPropertyTypes: true` required typing the `image` prop as `ImageSourcePropType | undefined` explicitly rather than just optional.
+
 #### Commit (r) — Collection tab: save and revisit
 
 The Collection tab moves from placeholder to a working journal. Users can save any element or route from its detail page; saved items live in AsyncStorage and surface in the Collection tab newest-first. Tapping a saved item opens its detail page. A "Clear all" link wipes the lot.

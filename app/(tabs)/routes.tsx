@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
+import { Thumbnail } from '@/components';
 import { Pressable, Stack, Surface, Text } from '@/components/primitives';
 import { ROUTE_META, ROUTES, type RouteId } from '@/features/routes';
 import { useTheme } from '@/hooks/useTheme';
@@ -15,23 +16,28 @@ function RouteCard({ id, onPress }: { id: RouteId; onPress: () => void }) {
       accessibilityRole="button"
       accessibilityLabel={t(`routes.${id}.title`)}
       style={{
+        flexDirection: 'row',
+        gap: theme.spacing.md,
         borderWidth: 1,
         borderColor: theme.colors.border,
         borderRadius: theme.radius.md,
         backgroundColor: theme.colors.surface,
-        padding: theme.spacing.lg,
+        padding: theme.spacing.md,
       }}
     >
-      <Stack gap="xs">
-        <Text variant="title2">{t(`routes.${id}.title`)}</Text>
-        <Text variant="body" color="inkMuted">
-          {t(`routes.${id}.oneLine`)}
-        </Text>
-        <Text variant="footnote" color="inkSubtle">
-          {t('meta.distance', { km: meta.distanceKm })} ·{' '}
-          {t('meta.duration', { minutes: meta.walkingMinutes })}
-        </Text>
-      </Stack>
+      <Thumbnail tint={meta.tint} image={meta.image} size={64} />
+      <View style={{ flex: 1 }}>
+        <Stack gap="xs">
+          <Text variant="title2">{t(`routes.${id}.title`)}</Text>
+          <Text variant="body" color="inkMuted">
+            {t(`routes.${id}.oneLine`)}
+          </Text>
+          <Text variant="footnote" color="inkSubtle">
+            {t('meta.distance', { km: meta.distanceKm })} ·{' '}
+            {t('meta.duration', { minutes: meta.walkingMinutes })}
+          </Text>
+        </Stack>
+      </View>
     </Pressable>
   );
 }
