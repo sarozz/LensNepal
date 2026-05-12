@@ -7,6 +7,10 @@ const config: ExpoConfig = {
   scheme: 'kathmandu-lens',
   orientation: 'portrait',
   userInterfaceStyle: 'automatic',
+  splash: {
+    backgroundColor: '#FAF7F2',
+    resizeMode: 'contain',
+  },
   assetBundlePatterns: ['**/*'],
   ios: {
     supportsTablet: false,

@@ -6,6 +6,24 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (k) — visual maturity (polish round 2)
+
+Targeted polish after a candid round-1 review. Closes most of the deferred items from commit (j).
+
+- **Tab bar icons.** Ionicons line variants per tab (`compass-outline` / `map-outline` / `bookmark-outline` / `book-outline`) via `@expo/vector-icons`. Active = `accent`, inactive = `inkSubtle`. The package was already in the transitive graph; now explicit in `dependencies`.
+- **Header styling.** `Tabs.screenOptions.headerTitleStyle` pulls `fontSize` from `theme.typography.title3.latin` and weight from the same token. `headerStyle` gains a 1 dp `border` hairline at the bottom — replaces the missing platform shadow on `headerShadowVisible: false`.
+- **Status bar.** `expo-status-bar` mounted inside the root layout with `style="auto"` so iOS automatically chooses light/dark content based on the active theme background. Fixes black-on-black on dark theme.
+- **Motion budget.** Stack `screenOptions.animation: 'slide_from_right'` with `animationDuration: 240` (BRIEF §5.4 `duration.standard`). Etiquette modal uses `slide_from_bottom` with `360 ms` (`duration.slow`, the brief's pick for "Modal enter"). The motion tokens authored in commit (b) are finally in use.
+- **Splash background tinted.** `app.config.ts` `splash.backgroundColor` set to `#FAF7F2` (the warm-paper `bg` token). Launch flash is no longer a stark white rectangle.
+- **Theme switcher refinement.** Each tile gets an 8 dp swatch dot before the label, coloured to that theme's accent (`light` → `#C8552B`, `dark` → `#E07A4A`, `outdoorBright` → `#A8331C`, `system` → `inkSubtle`). The user can now SEE what they're picking, not just read the label.
+- **Tab placeholder breathing room.** Explore / Routes / Collection screens centred vertically with `inkSubtle` placeholder copy (was `inkMuted`). Reads as "calm pause" rather than "TODO empty state". Guide stays left-aligned because it has the ThemeSwitcher below.
+
+New direct dep: `@expo/vector-icons@^15.0.0` — already transitively present via Expo, now declared explicitly so TS can resolve types. Not a real install change.
+
+Verifications: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` (92 tests across 19 suites, all green), `pnpm test:coverage` (100% on `src/lib` and `src/theme`).
+
+Still deferred (intentional): font binaries (sandbox can't fetch Google Fonts), custom tab bar component, dedicated lead-text typography token.
+
 #### Commit (j) — UI polish
 
 A direct response to a candid UI/UX review against BRIEF §5.1's principles ("hairlines, not boxes" / "one accent used sparingly" / "quiet over loud"). Five targeted fixes:

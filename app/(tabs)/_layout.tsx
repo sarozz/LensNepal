@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Tabs, useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { Pressable, Text } from '@/components/primitives';
@@ -28,8 +29,16 @@ export default function TabsLayout() {
     <Tabs
       screenOptions={{
         headerShown: true,
-        headerStyle: { backgroundColor: theme.colors.surface },
-        headerTitleStyle: { color: theme.colors.ink },
+        headerStyle: {
+          backgroundColor: theme.colors.surface,
+          borderBottomColor: theme.colors.border,
+          borderBottomWidth: 1,
+        },
+        headerTitleStyle: {
+          color: theme.colors.ink,
+          fontSize: theme.typography.title3.latin.fontSize,
+          fontWeight: '600',
+        },
         headerShadowVisible: false,
         headerRight: () => <HelpButton />,
         tabBarActiveTintColor: theme.colors.accent,
@@ -38,12 +47,47 @@ export default function TabsLayout() {
           backgroundColor: theme.colors.surface,
           borderTopColor: theme.colors.border,
         },
+        tabBarLabelStyle: {
+          fontSize: theme.typography.caption.latin.fontSize,
+        },
       }}
     >
-      <Tabs.Screen name="explore" options={{ title: t('explore') }} />
-      <Tabs.Screen name="routes" options={{ title: t('routes') }} />
-      <Tabs.Screen name="collection" options={{ title: t('collection') }} />
-      <Tabs.Screen name="guide" options={{ title: t('guide') }} />
+      <Tabs.Screen
+        name="explore"
+        options={{
+          title: t('explore'),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="compass-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="routes"
+        options={{
+          title: t('routes'),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="map-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="collection"
+        options={{
+          title: t('collection'),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="bookmark-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="guide"
+        options={{
+          title: t('guide'),
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="book-outline" size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

@@ -23,6 +23,7 @@
     "doctor": "expo-doctor"
   },
   "dependencies": {
+    "@expo/vector-icons": "^15.0.0",
     "expo": "~55.0.23",
     "expo-router": "~55.0.14",
     "expo-font": "~55.0.0",
