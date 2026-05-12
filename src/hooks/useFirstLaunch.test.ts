@@ -1,30 +1,38 @@
-import { act, renderHook } from '@testing-library/react-native';
+import { act, renderHook, waitFor } from '@testing-library/react-native';
 import { clear, getBoolean, setBoolean } from '@/lib/storage';
 import { useFirstLaunch } from './useFirstLaunch';
 
 describe('useFirstLaunch', () => {
-  beforeEach(() => {
-    clear();
+  beforeEach(async () => {
+    await clear();
   });
 
-  it('starts unacknowledged when storage is empty', () => {
+  it('hydrates to unacknowledged when storage is empty', async () => {
     const { result } = renderHook(() => useFirstLaunch());
+    await waitFor(() => {
+      expect(result.current.hydrated).toBe(true);
+    });
     expect(result.current.acknowledged).toBe(false);
   });
 
-  it('starts acknowledged when storage already says so', () => {
-    setBoolean('hasAcknowledgedEtiquette', true);
+  it('hydrates to acknowledged when storage already says so', async () => {
+    await setBoolean('hasAcknowledgedEtiquette', true);
     const { result } = renderHook(() => useFirstLaunch());
-    expect(result.current.acknowledged).toBe(true);
-  });
-
-  it('acknowledge() flips state and persists to MMKV', () => {
-    const { result } = renderHook(() => useFirstLaunch());
-    expect(result.current.acknowledged).toBe(false);
-    act(() => {
-      result.current.acknowledge();
+    await waitFor(() => {
+      expect(result.current.hydrated).toBe(true);
     });
     expect(result.current.acknowledged).toBe(true);
-    expect(getBoolean('hasAcknowledgedEtiquette')).toBe(true);
+  });
+
+  it('acknowledge() flips state and persists', async () => {
+    const { result } = renderHook(() => useFirstLaunch());
+    await waitFor(() => {
+      expect(result.current.hydrated).toBe(true);
+    });
+    await act(async () => {
+      await result.current.acknowledge();
+    });
+    expect(result.current.acknowledged).toBe(true);
+    expect(await getBoolean('hasAcknowledgedEtiquette')).toBe(true);
   });
 });

@@ -16,8 +16,8 @@ export default function EtiquetteModal() {
   const theme = useTheme();
   const { acknowledged, acknowledge } = useFirstLaunch();
 
-  const handleAcknowledge = () => {
-    acknowledge();
+  const handleAcknowledge = async () => {
+    await acknowledge();
     router.replace('/(tabs)/explore');
   };
 

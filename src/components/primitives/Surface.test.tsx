@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react-native';
 import { Text } from 'react-native';
+import { TestWrapper } from '@/test-utils';
 import { lightTheme } from '@/theme';
 import { Surface } from './Surface';
 
@@ -9,6 +10,7 @@ describe('Surface', () => {
       <Surface testID="surface" background="bg">
         <Text>x</Text>
       </Surface>,
+      { wrapper: TestWrapper },
     );
     expect(getByTestId('surface').props.style).toEqual(
       expect.arrayContaining([expect.objectContaining({ backgroundColor: lightTheme.colors.bg })]),
@@ -20,6 +22,7 @@ describe('Surface', () => {
       <Surface testID="surface" elevation="level3">
         <Text>x</Text>
       </Surface>,
+      { wrapper: TestWrapper },
     );
     const expected = lightTheme.elevation.level3;
     if (expected.kind !== 'shadow') {
@@ -40,6 +43,7 @@ describe('Surface', () => {
       <Surface testID="surface" padding="lg">
         <Text>x</Text>
       </Surface>,
+      { wrapper: TestWrapper },
     );
     expect(getByTestId('surface').props.style).toEqual(
       expect.arrayContaining([expect.objectContaining({ padding: lightTheme.spacing.lg })]),

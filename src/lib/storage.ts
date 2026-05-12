@@ -1,4 +1,4 @@
-import { storage } from './mmkv';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const STORAGE_KEYS = {
   hasAcknowledgedEtiquette: 'hasAcknowledgedEtiquette',
@@ -8,32 +8,31 @@ export const STORAGE_KEYS = {
 
 export type StorageKey = keyof typeof STORAGE_KEYS;
 
-export function getBoolean(key: StorageKey): boolean | undefined {
-  return storage.getBoolean(STORAGE_KEYS[key]);
+export async function getBoolean(key: StorageKey): Promise<boolean | undefined> {
+  const raw = await AsyncStorage.getItem(STORAGE_KEYS[key]);
+  if (raw === null) return undefined;
+  if (raw === 'true') return true;
+  if (raw === 'false') return false;
+  return undefined;
 }
 
-export function setBoolean(key: StorageKey, value: boolean): void {
-  storage.set(STORAGE_KEYS[key], value);
+export async function setBoolean(key: StorageKey, value: boolean): Promise<void> {
+  await AsyncStorage.setItem(STORAGE_KEYS[key], value ? 'true' : 'false');
 }
 
-export function getString(key: StorageKey): string | undefined {
-  return storage.getString(STORAGE_KEYS[key]);
+export async function getString(key: StorageKey): Promise<string | undefined> {
+  const raw = await AsyncStorage.getItem(STORAGE_KEYS[key]);
+  return raw === null ? undefined : raw;
 }
 
-export function setString(key: StorageKey, value: string): void {
-  storage.set(STORAGE_KEYS[key], value);
+export async function setString(key: StorageKey, value: string): Promise<void> {
+  await AsyncStorage.setItem(STORAGE_KEYS[key], value);
 }
 
-export function remove(key: StorageKey): void {
-  storage.delete(STORAGE_KEYS[key]);
+export async function remove(key: StorageKey): Promise<void> {
+  await AsyncStorage.removeItem(STORAGE_KEYS[key]);
 }
 
-export function clear(): void {
-  storage.clearAll();
+export async function clear(): Promise<void> {
+  await AsyncStorage.clear();
 }
-
-export const querySyncStorage = {
-  getItem: (key: string): string | null => storage.getString(key) ?? null,
-  setItem: (key: string, value: string): void => storage.set(key, value),
-  removeItem: (key: string): void => storage.delete(key),
-};

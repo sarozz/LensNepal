@@ -6,6 +6,46 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (m) — drop native-module deps so Expo Go can run the app
+
+User's Expo Go binary cannot load libraries that ship custom native code (NitroModules, TurboModules). The brief's chosen stack — `react-native-unistyles@3` (Nitro) + `react-native-mmkv@3` (Turbo) — is correct for a production build with a custom dev client, but cannot run inside off-the-shelf Expo Go. This commit replaces both with Expo Go-compatible alternatives so live preview works today without an EAS build.
+
+**Removed**
+- `react-native-unistyles` (used NitroModules).
+- `react-native-mmkv` (used TurboModules + new arch).
+- `@tanstack/query-sync-storage-persister` (paired with MMKV's sync API).
+
+**Added**
+- `@react-native-async-storage/async-storage@2.2.0` — bundled with Expo SDK 54, runs inside Expo Go.
+- `@tanstack/query-async-storage-persister@^5` — matches the new async storage.
+
+**New file**
+- `src/theme/ThemeContext.tsx` — a pure React-Context theme provider. Listens to `Appearance` for system mode, holds the active `ThemeMode`, dispatches mode changes. ~80 lines, no native code.
+
+**Refactored**
+- `src/theme/index.ts` no longer triggers `StyleSheet.configure` as a side effect. Now just exports `ThemeProvider`, `useThemeContext`, and the theme objects.
+- `src/hooks/useTheme.ts` reads from `ThemeContext` instead of `useUnistyles()`.
+- `src/hooks/useThemePreference.ts` is now async (`setMode` returns Promise) and dispatches into the theme context. Reads `preferredTheme` from AsyncStorage at mount, persists changes back.
+- `src/hooks/useFirstLaunch.ts` is async; exposes a `hydrated` flag so the root layout can wait one tick before choosing the initial route. `acknowledge()` is now async.
+- `src/lib/storage.ts` — every public function returns a Promise. Internally calls AsyncStorage.
+- `src/lib/query-client.ts` swaps in `createAsyncStoragePersister`.
+- `src/lib/mmkv.ts` — deleted.
+- `app/_layout.tsx` waits on both `loaded` (fonts) AND `hydrated` (etiquette ack) before deciding `initialRouteName`. Mounts `<ThemeProvider>` between `SafeAreaProvider` and `I18nextProvider`.
+- `app/etiquette.tsx` — `handleAcknowledge` awaits the (now async) `acknowledge()` before navigating.
+- `jest.setup.ts` — dropped the unistyles + MMKV mocks. Added the official AsyncStorage jest mock.
+
+**Tests**
+- `src/test-utils.tsx` — new `TestWrapper` that wraps children in `I18nextProvider` + `ThemeProvider`, used by every primitive and component test.
+- All primitive tests updated to use `TestWrapper`.
+- `useFirstLaunch.test.ts`, `useThemePreference.test.tsx`, `ThemeSwitcher.test.tsx`, `storage.test.ts` rewritten for async API + `waitFor`.
+
+**Brief follow-up**
+BRIEF §9.2's stack named `react-native-unistyles@^3` and `react-native-mmkv@^3`. The realistic options going forward:
+1. Keep the current Expo Go-compatible stack (Context + AsyncStorage) and amend the brief.
+2. Reintroduce `unistyles@3` + `mmkv@3` once an EAS dev client is set up — the architecture cleanly accepts either backend, only `useTheme.ts`, `useThemePreference.ts`, `storage.ts` need to flip.
+
+Verifications: `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` — **88 tests across 19 suites**, all green.
+
 #### Commit (l) — SDK 55 → SDK 54 rollback
 
 User has Expo Go pinned to SDK 54 and explicitly requested the project be downgraded to match. **This reverses commit (a)'s SDK 55 bump.** All Phase 1 features (etiquette, theme switcher, primitives, tests) remain unchanged — only version pins shift.

@@ -1,7 +1,6 @@
-import { useUnistyles } from 'react-native-unistyles';
+import { useThemeContext } from '@/theme';
 import type { AppTheme } from '@/theme';
 
 export function useTheme(): AppTheme {
-  const { theme } = useUnistyles();
-  return theme;
+  return useThemeContext().theme;
 }

@@ -2,23 +2,17 @@ import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 import { Pressable, Stack, Text } from '@/components/primitives';
 import { useTheme } from '@/hooks/useTheme';
-import { type ThemeMode, useThemePreference } from '@/hooks/useThemePreference';
-import type { AppTheme } from '@/theme';
+import { useThemePreference } from '@/hooks/useThemePreference';
+import type { AppTheme, ThemeMode } from '@/theme';
 import { darkPalette, lightPalette, outdoorBrightPalette } from '@/theme/tokens/colors';
 
 const MODES: ReadonlyArray<ThemeMode> = ['system', 'light', 'dark', 'outdoorBright'];
 
 function swatchColor(mode: ThemeMode, theme: AppTheme): string {
-  switch (mode) {
-    case 'system':
-      return theme.colors.inkSubtle;
-    case 'light':
-      return lightPalette.accent;
-    case 'dark':
-      return darkPalette.accent;
-    case 'outdoorBright':
-      return outdoorBrightPalette.accent;
-  }
+  if (mode === 'system') return theme.colors.inkSubtle;
+  if (mode === 'light') return lightPalette.accent;
+  if (mode === 'dark') return darkPalette.accent;
+  return outdoorBrightPalette.accent;
 }
 
 export function ThemeSwitcher() {
@@ -42,7 +36,7 @@ export function ThemeSwitcher() {
           return (
             <Pressable
               key={m}
-              onPress={() => setMode(m)}
+              onPress={() => void setMode(m)}
               accessibilityRole="button"
               accessibilityState={{ selected: active }}
               accessibilityLabel={labels[m]}

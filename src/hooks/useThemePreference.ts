@@ -1,48 +1,41 @@
-import { useCallback, useEffect, useState } from 'react';
-import { UnistylesRuntime } from 'react-native-unistyles';
+import { useEffect } from 'react';
+import { type ThemeMode, useThemeContext } from '@/theme';
 import { getString, remove, setString } from '@/lib/storage';
-import type { ThemeName } from '@/theme';
-
-export type ThemeMode = ThemeName | 'system';
 
 export type ThemePreferenceState = {
   mode: ThemeMode;
-  setMode: (next: ThemeMode) => void;
+  setMode: (next: ThemeMode) => Promise<void>;
 };
 
-function isThemeName(value: string): value is ThemeName {
-  return value === 'light' || value === 'dark' || value === 'outdoorBright';
-}
-
-function readInitialMode(): ThemeMode {
-  const stored = getString('preferredTheme');
-  return stored !== undefined && isThemeName(stored) ? stored : 'system';
-}
-
-function applyMode(mode: ThemeMode): void {
-  if (mode === 'system') {
-    UnistylesRuntime.setAdaptiveThemes(true);
-  } else {
-    UnistylesRuntime.setAdaptiveThemes(false);
-    UnistylesRuntime.setTheme(mode);
-  }
+function isThemeMode(value: string): value is ThemeMode {
+  return value === 'system' || value === 'light' || value === 'dark' || value === 'outdoorBright';
 }
 
 export function useThemePreference(): ThemePreferenceState {
-  const [mode, setModeState] = useState<ThemeMode>(readInitialMode);
+  const { mode, setMode: setContextMode } = useThemeContext();
 
   useEffect(() => {
-    applyMode(mode);
-  }, [mode]);
+    let cancelled = false;
+    void (async () => {
+      const stored = await getString('preferredTheme');
+      if (cancelled) return;
+      if (stored !== undefined && isThemeMode(stored) && stored !== mode) {
+        setContextMode(stored);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [mode, setContextMode]);
 
-  const setMode = useCallback((next: ThemeMode) => {
+  const setMode = async (next: ThemeMode): Promise<void> => {
+    setContextMode(next);
     if (next === 'system') {
-      remove('preferredTheme');
+      await remove('preferredTheme');
     } else {
-      setString('preferredTheme', next);
+      await setString('preferredTheme', next);
     }
-    setModeState(next);
-  }, []);
+  };
 
   return { mode, setMode };
 }

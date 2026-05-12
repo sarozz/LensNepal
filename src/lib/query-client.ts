@@ -1,6 +1,6 @@
-import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { QueryClient } from '@tanstack/react-query';
-import { querySyncStorage } from './storage';
 
 const TWENTY_FOUR_HOURS_MS = 1000 * 60 * 60 * 24;
 
@@ -18,8 +18,8 @@ export const queryClient = new QueryClient({
   },
 });
 
-const persister = createSyncStoragePersister({
-  storage: querySyncStorage,
+const persister = createAsyncStoragePersister({
+  storage: AsyncStorage,
   key: 'kathmandu-lens.query-cache',
 });
 

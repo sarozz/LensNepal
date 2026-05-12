@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react-native';
 import { Text } from 'react-native';
+import { TestWrapper } from '@/test-utils';
 import { lightTheme } from '@/theme';
 import { Stack } from './Stack';
 
@@ -9,6 +10,7 @@ describe('Stack', () => {
       <Stack testID="stack" direction="row">
         <Text>x</Text>
       </Stack>,
+      { wrapper: TestWrapper },
     );
     expect(getByTestId('stack').props.style).toEqual(
       expect.arrayContaining([expect.objectContaining({ flexDirection: 'row' })]),
@@ -20,6 +22,7 @@ describe('Stack', () => {
       <Stack testID="stack" gap="md">
         <Text>x</Text>
       </Stack>,
+      { wrapper: TestWrapper },
     );
     expect(getByTestId('stack').props.style).toEqual(
       expect.arrayContaining([expect.objectContaining({ gap: lightTheme.spacing.md })]),
@@ -31,6 +34,7 @@ describe('Stack', () => {
       <Stack testID="stack">
         <Text>x</Text>
       </Stack>,
+      { wrapper: TestWrapper },
     );
     const styles = getByTestId('stack').props.style as Array<Record<string, unknown>>;
     const merged = Object.assign({}, ...styles);

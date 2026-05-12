@@ -1,18 +1,12 @@
 import { fireEvent, render } from '@testing-library/react-native';
-import type { ReactNode } from 'react';
-import { I18nextProvider } from 'react-i18next';
-import { i18n } from '@/i18n';
+import { TestWrapper } from '@/test-utils';
 import { lightTheme } from '@/theme';
 import { Button } from './Button';
-
-const wrap = ({ children }: { children: ReactNode }) => (
-  <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
-);
 
 describe('Button', () => {
   it('renders the label', () => {
     const { getByText } = render(<Button label="Tap me" onPress={() => {}} />, {
-      wrapper: wrap,
+      wrapper: TestWrapper,
     });
     expect(getByText('Tap me')).toBeTruthy();
   });
@@ -20,7 +14,7 @@ describe('Button', () => {
   it('fires onPress when pressed', () => {
     const onPress = jest.fn();
     const { getByRole } = render(<Button label="Tap me" onPress={onPress} />, {
-      wrapper: wrap,
+      wrapper: TestWrapper,
     });
     fireEvent.press(getByRole('button'));
     expect(onPress).toHaveBeenCalledTimes(1);
@@ -28,7 +22,7 @@ describe('Button', () => {
 
   it('renders the label in the accent colour', () => {
     const { getByText } = render(<Button label="Tap me" onPress={() => {}} />, {
-      wrapper: wrap,
+      wrapper: TestWrapper,
     });
     const node = getByText('Tap me');
     expect(node.props.style).toEqual(
@@ -39,7 +33,7 @@ describe('Button', () => {
   it('uses the explicit accessibility label when provided', () => {
     const { getByLabelText } = render(
       <Button label="×" onPress={() => {}} accessibilityLabel="Close" />,
-      { wrapper: wrap },
+      { wrapper: TestWrapper },
     );
     expect(getByLabelText('Close')).toBeTruthy();
   });

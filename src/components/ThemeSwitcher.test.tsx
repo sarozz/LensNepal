@@ -1,22 +1,20 @@
-import { fireEvent, render } from '@testing-library/react-native';
+import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import type { ReactNode } from 'react';
 import { I18nextProvider } from 'react-i18next';
-import { UnistylesRuntime } from 'react-native-unistyles';
 import { i18n } from '@/i18n';
-import { clear } from '@/lib/storage';
+import { clear, getString } from '@/lib/storage';
+import { ThemeProvider } from '@/theme';
 import { ThemeSwitcher } from './ThemeSwitcher';
 
-const mocked = jest.mocked(UnistylesRuntime);
-
 const wrap = ({ children }: { children: ReactNode }) => (
-  <I18nextProvider i18n={i18n}>{children}</I18nextProvider>
+  <I18nextProvider i18n={i18n}>
+    <ThemeProvider>{children}</ThemeProvider>
+  </I18nextProvider>
 );
 
 describe('ThemeSwitcher', () => {
-  beforeEach(() => {
-    clear();
-    mocked.setTheme.mockClear();
-    mocked.setAdaptiveThemes.mockClear();
+  beforeEach(async () => {
+    await clear();
   });
 
   it('renders all four mode tiles', () => {
@@ -33,17 +31,25 @@ describe('ThemeSwitcher', () => {
     expect(getByLabelText('Light').props.accessibilityState.selected).toBe(false);
   });
 
-  it('switches mode and applies the theme via UnistylesRuntime when tapped', () => {
+  it('persists the chosen mode and marks it active when tapped', async () => {
     const { getByLabelText } = render(<ThemeSwitcher />, { wrapper: wrap });
     fireEvent.press(getByLabelText('Outdoor'));
-    expect(mocked.setAdaptiveThemes).toHaveBeenLastCalledWith(false);
-    expect(mocked.setTheme).toHaveBeenLastCalledWith('outdoorBright');
+    await waitFor(() => {
+      expect(getByLabelText('Outdoor').props.accessibilityState.selected).toBe(true);
+    });
+    expect(await getString('preferredTheme')).toBe('outdoorBright');
   });
 
-  it('re-enables adaptive when System is tapped after a manual choice', () => {
+  it('clears persistence and switches active tile when System is tapped after a manual choice', async () => {
     const { getByLabelText } = render(<ThemeSwitcher />, { wrapper: wrap });
     fireEvent.press(getByLabelText('Dark'));
+    await waitFor(() => {
+      expect(getByLabelText('Dark').props.accessibilityState.selected).toBe(true);
+    });
     fireEvent.press(getByLabelText('System'));
-    expect(mocked.setAdaptiveThemes).toHaveBeenLastCalledWith(true);
+    await waitFor(() => {
+      expect(getByLabelText('System').props.accessibilityState.selected).toBe(true);
+    });
+    expect(await getString('preferredTheme')).toBeUndefined();
   });
 });
