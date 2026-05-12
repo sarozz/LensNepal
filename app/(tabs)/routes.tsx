@@ -1,12 +1,12 @@
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, View } from 'react-native';
-import { Thumbnail } from '@/components';
+import { Hero } from '@/components';
 import { Pressable, Stack, Surface, Text } from '@/components/primitives';
 import { ROUTE_META, ROUTES, type RouteId } from '@/features/routes';
 import { useTheme } from '@/hooks/useTheme';
 
-function RouteCard({ id, onPress }: { id: RouteId; onPress: () => void }) {
+function RouteTile({ id, onPress }: { id: RouteId; onPress: () => void }) {
   const { t } = useTranslation('routes');
   const theme = useTheme();
   const meta = ROUTE_META[id];
@@ -16,28 +16,31 @@ function RouteCard({ id, onPress }: { id: RouteId; onPress: () => void }) {
       accessibilityRole="button"
       accessibilityLabel={t(`routes.${id}.title`)}
       style={{
-        flexDirection: 'row',
-        gap: theme.spacing.md,
+        flexBasis: '48%',
+        flexGrow: 0,
         borderWidth: 1,
         borderColor: theme.colors.border,
         borderRadius: theme.radius.md,
         backgroundColor: theme.colors.surface,
-        padding: theme.spacing.md,
+        overflow: 'hidden',
       }}
     >
-      <Thumbnail tint={meta.tint} image={meta.image} size={64} />
-      <View style={{ flex: 1 }}>
-        <Stack gap="xs">
-          <Text variant="title2">{t(`routes.${id}.title`)}</Text>
-          <Text variant="body" color="inkMuted">
-            {t(`routes.${id}.oneLine`)}
-          </Text>
-          <Text variant="footnote" color="inkSubtle">
-            {t('meta.distance', { km: meta.distanceKm })} ·{' '}
-            {t('meta.duration', { minutes: meta.walkingMinutes })}
-          </Text>
-        </Stack>
-      </View>
+      <Hero
+        tint={meta.tint}
+        image={meta.image}
+        height={120}
+        accessibilityLabel={t(`routes.${id}.title`)}
+      />
+      <Stack padding="md" gap="xs">
+        <Text variant="title3">{t(`routes.${id}.title`)}</Text>
+        <Text variant="footnote" color="inkMuted" numberOfLines={2}>
+          {t(`routes.${id}.oneLine`)}
+        </Text>
+        <Text variant="caption" color="inkSubtle">
+          {t('meta.distance', { km: meta.distanceKm })} ·{' '}
+          {t('meta.duration', { minutes: meta.walkingMinutes })}
+        </Text>
+      </Stack>
     </Pressable>
   );
 }
@@ -60,11 +63,18 @@ export default function RoutesScreen() {
             {t('browse.intro')}
           </Text>
         </Stack>
-        <Stack padding="lg" gap="md">
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: theme.spacing.md,
+            paddingHorizontal: theme.spacing.lg,
+          }}
+        >
           {ROUTES.map((id) => (
-            <RouteCard key={id} id={id} onPress={() => openRoute(id)} />
+            <RouteTile key={id} id={id} onPress={() => openRoute(id)} />
           ))}
-        </Stack>
+        </View>
       </ScrollView>
     </Surface>
   );

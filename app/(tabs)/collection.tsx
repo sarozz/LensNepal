@@ -1,24 +1,24 @@
 import { useRouter } from 'expo-router';
 import type { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScrollView, View } from 'react-native';
-import { Thumbnail } from '@/components';
+import { type ImageSourcePropType, ScrollView, View } from 'react-native';
+import { Hero } from '@/components';
 import { Pressable, Stack, Surface, Text } from '@/components/primitives';
 import { useCollection } from '@/features/collection';
 import { type ElementId, ELEMENT_META, isElementId } from '@/features/elements';
 import { isRouteId, ROUTE_META, type RouteId } from '@/features/routes';
 import { useTheme } from '@/hooks/useTheme';
 
-type RowProps = {
+type TileProps = {
   kindLabel: string;
   title: string;
   summary: string;
   tint: string;
-  image?: Parameters<typeof Thumbnail>[0]['image'];
+  image?: ImageSourcePropType | undefined;
   onOpen: () => void;
 };
 
-function SavedRow({ kindLabel, title, summary, tint, image, onOpen }: RowProps) {
+function SavedTile({ kindLabel, title, summary, tint, image, onOpen }: TileProps) {
   const theme = useTheme();
   return (
     <Pressable
@@ -26,37 +26,35 @@ function SavedRow({ kindLabel, title, summary, tint, image, onOpen }: RowProps) 
       accessibilityRole="button"
       accessibilityLabel={title}
       style={{
-        flexDirection: 'row',
-        gap: theme.spacing.md,
+        flexBasis: '48%',
+        flexGrow: 0,
         borderWidth: 1,
         borderColor: theme.colors.border,
         borderRadius: theme.radius.md,
         backgroundColor: theme.colors.surface,
-        padding: theme.spacing.md,
+        overflow: 'hidden',
       }}
     >
-      <Thumbnail tint={tint} image={image} size={64} />
-      <View style={{ flex: 1 }}>
-        <Stack gap="xs">
-          <Text variant="footnote" color="inkSubtle">
-            {kindLabel}
-          </Text>
-          <Text variant="title2">{title}</Text>
-          <Text variant="body" color="inkMuted">
-            {summary}
-          </Text>
-        </Stack>
-      </View>
+      <Hero tint={tint} image={image} height={120} accessibilityLabel={title} />
+      <Stack padding="md" gap="xs">
+        <Text variant="caption" color="inkSubtle">
+          {kindLabel}
+        </Text>
+        <Text variant="title3">{title}</Text>
+        <Text variant="footnote" color="inkMuted" numberOfLines={2}>
+          {summary}
+        </Text>
+      </Stack>
     </Pressable>
   );
 }
 
-function ElementRow({ id, onOpen }: { id: ElementId; onOpen: () => void }) {
+function ElementTile({ id, onOpen }: { id: ElementId; onOpen: () => void }) {
   const { t } = useTranslation('elements');
   const { t: tCollection } = useTranslation('collection');
   const meta = ELEMENT_META[id];
   return (
-    <SavedRow
+    <SavedTile
       kindLabel={tCollection('kind.element')}
       title={t(`elements.${id}.title`)}
       summary={t(`elements.${id}.oneLine`)}
@@ -67,12 +65,12 @@ function ElementRow({ id, onOpen }: { id: ElementId; onOpen: () => void }) {
   );
 }
 
-function RouteRow({ id, onOpen }: { id: RouteId; onOpen: () => void }) {
+function RouteTile({ id, onOpen }: { id: RouteId; onOpen: () => void }) {
   const { t } = useTranslation('routes');
   const { t: tCollection } = useTranslation('collection');
   const meta = ROUTE_META[id];
   return (
-    <SavedRow
+    <SavedTile
       kindLabel={tCollection('kind.route')}
       title={t(`routes.${id}.title`)}
       summary={t(`routes.${id}.oneLine`)}
@@ -96,18 +94,18 @@ export default function CollectionScreen() {
     router.push({ pathname: '/route/[id]', params: { id } });
   };
 
-  const rows: ReactNode[] = [];
+  const tiles: ReactNode[] = [];
   for (const item of items) {
     if (item.kind === 'element' && isElementId(item.id)) {
       const id = item.id;
-      rows.push(<ElementRow key={`element:${id}`} id={id} onOpen={() => openElement(id)} />);
+      tiles.push(<ElementTile key={`element:${id}`} id={id} onOpen={() => openElement(id)} />);
     } else if (item.kind === 'route' && isRouteId(item.id)) {
       const id = item.id;
-      rows.push(<RouteRow key={`route:${id}`} id={id} onOpen={() => openRoute(id)} />);
+      tiles.push(<RouteTile key={`route:${id}`} id={id} onOpen={() => openRoute(id)} />);
     }
   }
 
-  if (rows.length === 0) {
+  if (tiles.length === 0) {
     return (
       <Surface background="bg" padding="xl" style={{ flex: 1, justifyContent: 'center' }}>
         <Stack gap="md" align="center">
@@ -129,9 +127,16 @@ export default function CollectionScreen() {
             {t('browse.intro')}
           </Text>
         </Stack>
-        <Stack padding="lg" gap="md">
-          {rows}
-        </Stack>
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: theme.spacing.md,
+            paddingHorizontal: theme.spacing.lg,
+          }}
+        >
+          {tiles}
+        </View>
         <Stack padding="xl" align="center">
           <Pressable onPress={() => void clear()} accessibilityRole="button">
             <Text variant="callout" color="danger">

@@ -1,12 +1,12 @@
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { ScrollView, View } from 'react-native';
+import { Hero } from '@/components';
 import { Pressable, Stack, Surface, Text } from '@/components/primitives';
-import { Thumbnail } from '@/components';
 import { type ElementId, ELEMENT_META, ELEMENTS } from '@/features/elements';
 import { useTheme } from '@/hooks/useTheme';
 
-function ElementCard({ id, onPress }: { id: ElementId; onPress: () => void }) {
+function ElementTile({ id, onPress }: { id: ElementId; onPress: () => void }) {
   const { t } = useTranslation('elements');
   const theme = useTheme();
   const meta = ELEMENT_META[id];
@@ -16,24 +16,27 @@ function ElementCard({ id, onPress }: { id: ElementId; onPress: () => void }) {
       accessibilityRole="button"
       accessibilityLabel={t(`elements.${id}.title`)}
       style={{
-        flexDirection: 'row',
-        gap: theme.spacing.md,
+        flexBasis: '48%',
+        flexGrow: 0,
         borderWidth: 1,
         borderColor: theme.colors.border,
         borderRadius: theme.radius.md,
         backgroundColor: theme.colors.surface,
-        padding: theme.spacing.md,
+        overflow: 'hidden',
       }}
     >
-      <Thumbnail tint={meta.tint} image={meta.image} size={64} />
-      <View style={{ flex: 1 }}>
-        <Stack gap="xs">
-          <Text variant="title2">{t(`elements.${id}.title`)}</Text>
-          <Text variant="body" color="inkMuted">
-            {t(`elements.${id}.oneLine`)}
-          </Text>
-        </Stack>
-      </View>
+      <Hero
+        tint={meta.tint}
+        image={meta.image}
+        height={120}
+        accessibilityLabel={t(`elements.${id}.title`)}
+      />
+      <Stack padding="md" gap="xs">
+        <Text variant="title3">{t(`elements.${id}.title`)}</Text>
+        <Text variant="footnote" color="inkMuted" numberOfLines={2}>
+          {t(`elements.${id}.oneLine`)}
+        </Text>
+      </Stack>
     </Pressable>
   );
 }
@@ -56,11 +59,18 @@ export default function ExploreScreen() {
             {t('browse.intro')}
           </Text>
         </Stack>
-        <Stack padding="lg" gap="md">
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            gap: theme.spacing.md,
+            paddingHorizontal: theme.spacing.lg,
+          }}
+        >
           {ELEMENTS.map((id) => (
-            <ElementCard key={id} id={id} onPress={() => openElement(id)} />
+            <ElementTile key={id} id={id} onPress={() => openElement(id)} />
           ))}
-        </Stack>
+        </View>
       </ScrollView>
     </Surface>
   );

@@ -6,6 +6,35 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 2 — Browse the valley's elements (in progress)
 
+#### Commit (u) — 2-column grid layout for all browse screens
+
+User feedback: the horizontal-list layout still felt like "bland text paragraphs." Switching every browse surface to a 2-column gallery grid so the visual hierarchy becomes image-first, text-second.
+
+**Layout shift**
+- Each card was a horizontal row: thumbnail-left + title/copy-right.
+- Each card is now a tile: Hero banner (120 dp) at the top, content below.
+- Two columns per screen with `gap: theme.spacing.md` and `flexBasis: '48%'`. Wraps cleanly on any width.
+
+**Internal hierarchy in each tile**
+1. Hero banner (image or tint) — dominant visual element
+2. Title in `title3` weight (slightly bolder than the body)
+3. One-line summary in `footnote` size with `numberOfLines={2}` to keep all tiles equal height
+4. (Routes only) — third line with distance · duration in `caption` `inkSubtle`
+5. (Collection only) — first line is the kind label ("Element" / "Walk") in `caption` `inkSubtle`
+
+**Modified**
+- `app/(tabs)/explore.tsx` — `ElementTile` replaces `ElementCard`; renders in `flex-wrap` 2-col grid
+- `app/(tabs)/routes.tsx` — same treatment for routes
+- `app/(tabs)/collection.tsx` — same treatment for saved items, with the kind-label eyebrow
+
+**Why this reads less basic**
+- The thumbnail/Hero dominates visual weight — image first, copy second
+- Equal-height tiles create a rhythmic grid rather than a long scroll-list
+- Multiple cards visible at once = sense of breadth (12 elements feels like 12)
+- Card heights are short enough that 4-6 tiles are visible per screen
+
+**Verifications** — `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` all green. 94 tests across 19 suites.
+
 #### Commit (t) — dataset depth: five elements → twelve
 
 Direct response to user feedback that five was too thin. Adds seven more, ranging from major monuments down to common household objects, so the Explore tab now reads as a curated collection rather than a starter sample.
