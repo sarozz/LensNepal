@@ -1,0 +1,26 @@
+{
+  "ok": "OK",
+  "cancel": "Cancel",
+  "retry": "Retry",
+  "dismiss": "Dismiss",
+  "loading": "Loading…",
+  "placeholder": "Coming soon.",
+  "notFound": "We can't find that screen.",
+  "backToStart": "Back to start",
+  "openEtiquette": "Open cultural etiquette guide",
+  "helpGlyph": "?",
+  "close": "Close",
+  "closeGlyph": "×",
+  "theme": {
+    "sectionTitle": "Theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "outdoorBright": "Outdoor"
+  },
+  "error": {
+    "generic": "Something went wrong.",
+    "offline": "You're offline.",
+    "tryAgain": "Try again"
+  }
+}

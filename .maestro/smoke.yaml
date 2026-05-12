@@ -1,0 +1,15 @@
+appId: com.kathmandulens.app
+---
+- launchApp:
+    clearState: true
+- assertVisible: "Before you wander."
+- tapOn: "I understand"
+- assertVisible: "Explore"
+- tapOn: "Routes"
+- assertVisible: "Routes"
+- tapOn: "Collection"
+- assertVisible: "Collection"
+- tapOn: "Guide"
+- assertVisible: "Guide"
+- tapOn: "Open cultural etiquette guide"
+- assertVisible: "Before you wander."

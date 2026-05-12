@@ -1,0 +1,21 @@
+import { useTranslation } from 'react-i18next';
+import { ThemeSwitcher } from '@/components';
+import { Stack, Surface, Text } from '@/components/primitives';
+
+export default function GuideScreen() {
+  const { t: tTabs } = useTranslation('tabs');
+  const { t: tCommon } = useTranslation('common');
+  return (
+    <Surface background="bg" padding="lg" style={{ flex: 1 }}>
+      <Stack gap="xl">
+        <Stack gap="md">
+          <Text variant="title1">{tTabs('guide')}</Text>
+          <Text variant="body" color="inkMuted">
+            {tCommon('placeholder')}
+          </Text>
+        </Stack>
+        <ThemeSwitcher />
+      </Stack>
+    </Surface>
+  );
+}

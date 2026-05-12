@@ -1,0 +1,37 @@
+{
+  "browse": {
+    "title": "Three walks",
+    "intro": "Slow loops through quiet parts of the city. Walk early; the streets soften before traffic."
+  },
+  "meta": {
+    "distance": "{{km}} km",
+    "duration": "{{minutes}} min walk"
+  },
+  "sections": {
+    "whenToGo": "When to go",
+    "tips": "Notes"
+  },
+  "routes": {
+    "patanDawn": {
+      "title": "Patan dawn walk",
+      "oneLine": "Patan Durbar Square and its courtyards before the first tour bus.",
+      "description": "The square holds the old royal palace, three Krishna temples, and a stone tank where pigeons drink at first light. Side alleys north of the square open into Newari courtyards — small, swept, lined with carved wooden doorways. Most are private homes; visitors enter the public ones quietly. The metalworkers' street starts to ring around eight; that's the cue the walk is ending.",
+      "whenToGo": "Start before six in the cool months, before five in summer. Light reaches the square around six-thirty.",
+      "tips": "Shoes come off at temple thresholds. The square's pavement is uneven — flat soles help."
+    },
+    "boudhaKora": {
+      "title": "Boudha kora",
+      "oneLine": "One clockwise circuit of the great stupa with the morning pilgrims.",
+      "description": "The kora is the circumambulation of Boudha Stupa, always clockwise. Pilgrims walk the outer ring slowly, spinning the prayer wheels embedded in the base wall as they pass. Some lift to the higher ring; most stay below. The painted eyes look out from every face above. A full loop is short — under a kilometre — but the rhythm changes when butter lamps are lit and chant begins around dawn.",
+      "whenToGo": "Dawn or dusk. Avoid midday — the white dome reflects sun and the rim heats up.",
+      "tips": "Photographs of pilgrims need a quiet ask, or skip them. The eyes themselves are fine."
+    },
+    "swayambhuClimb": {
+      "title": "Swayambhu climb",
+      "oneLine": "The 365 steps up to the stupa on the hill west of Kathmandu.",
+      "description": "The east staircase rises straight from the foot of the hill. Stone Buddhas line both sides; macaques sit on the railings and the prayer wheels at the top. The climb takes ten or fifteen minutes if you stop to breathe. At the summit the stupa rises in white plaster and gold, ringed by shrines, butter-lamp houses, and the long view east over the city. Loop the dome once before going down.",
+      "whenToGo": "Early. Bring water for the climb up. Sunset works but the descent is dim by seven.",
+      "tips": "Macaques will take anything held loosely — sunglasses, food bags. Keep small things in pockets."
+    }
+  }
+}

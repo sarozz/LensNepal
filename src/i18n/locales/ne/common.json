@@ -1,0 +1,26 @@
+{
+  "ok": "[NE] OK",
+  "cancel": "[NE] Cancel",
+  "retry": "[NE] Retry",
+  "dismiss": "[NE] Dismiss",
+  "loading": "[NE] Loading…",
+  "placeholder": "[NE] Coming soon.",
+  "notFound": "[NE] We can't find that screen.",
+  "backToStart": "[NE] Back to start",
+  "openEtiquette": "[NE] Open cultural etiquette guide",
+  "helpGlyph": "?",
+  "close": "[NE] Close",
+  "closeGlyph": "×",
+  "theme": {
+    "sectionTitle": "[NE] Theme",
+    "system": "[NE] System",
+    "light": "[NE] Light",
+    "dark": "[NE] Dark",
+    "outdoorBright": "[NE] Outdoor"
+  },
+  "error": {
+    "generic": "[NE] Something went wrong.",
+    "offline": "[NE] You're offline.",
+    "tryAgain": "[NE] Try again"
+  }
+}
