@@ -4,7 +4,7 @@ import * as path from 'node:path';
 const PROJECT_ROOT = path.resolve(__dirname, '../..');
 const SOURCE_DIRS = ['src', 'app'];
 const LOCALE_EN_DIR = path.join(PROJECT_ROOT, 'src/i18n/locales/en');
-const NAMESPACES = ['common', 'tabs', 'etiquette', 'recognition'] as const;
+const NAMESPACES = ['common', 'tabs', 'etiquette', 'elements'] as const;
 
 // Keys referenced via template literals or computed values that the static
 // regex below cannot match. Add a row when a new dynamic call appears.
@@ -21,23 +21,23 @@ const DYNAMIC_KEY_ALLOWLIST: ReadonlyArray<string> = [
   'etiquette:sections.kumari.title',
   'etiquette:sections.kumari.body',
   // app/recognition/[id].tsx — t(`elements.${id}.title`/.oneLine/.context)
-  'recognition:elements.boudha.title',
-  'recognition:elements.boudha.oneLine',
-  'recognition:elements.boudha.context',
-  'recognition:elements.pashupatinath.title',
-  'recognition:elements.pashupatinath.oneLine',
-  'recognition:elements.pashupatinath.context',
-  'recognition:elements.swayambhu.title',
-  'recognition:elements.swayambhu.oneLine',
-  'recognition:elements.swayambhu.context',
-  'recognition:elements.lionGate.title',
-  'recognition:elements.lionGate.oneLine',
-  'recognition:elements.lionGate.context',
-  'recognition:elements.lotusMotif.title',
-  'recognition:elements.lotusMotif.oneLine',
-  'recognition:elements.lotusMotif.context',
+  'elements:elements.boudha.title',
+  'elements:elements.boudha.oneLine',
+  'elements:elements.boudha.context',
+  'elements:elements.pashupatinath.title',
+  'elements:elements.pashupatinath.oneLine',
+  'elements:elements.pashupatinath.context',
+  'elements:elements.swayambhu.title',
+  'elements:elements.swayambhu.oneLine',
+  'elements:elements.swayambhu.context',
+  'elements:elements.lionGate.title',
+  'elements:elements.lionGate.oneLine',
+  'elements:elements.lionGate.context',
+  'elements:elements.lotusMotif.title',
+  'elements:elements.lotusMotif.oneLine',
+  'elements:elements.lotusMotif.context',
   // app/recognition/[id].tsx — t(element.source.labelKey)
-  'recognition:sources.wikipedia',
+  'elements:sources.wikipedia',
 ];
 
 // Keys deliberately seeded in commit (c) as common-namespace API surface for

@@ -1,13 +1,8 @@
 {
-  "permission": {
-    "title": "Camera access",
-    "body": "The lens uses your camera to identify what's in front of you. Photos stay on your phone.",
-    "grant": "Allow camera",
-    "denied": "Camera access is off. Enable it in Settings to use the lens."
+  "browse": {
+    "title": "Five things to look for",
+    "intro": "These appear across temples and courtyards in the valley. Tap any to read more."
   },
-  "shutter": "Capture",
-  "thinking": "Looking…",
-  "lowConfidence": "Best guess",
   "sources": {
     "wikipedia": "Wikipedia",
     "intro": "Where this comes from"

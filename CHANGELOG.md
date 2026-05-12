@@ -4,7 +4,37 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ## [Unreleased]
 
-### Phase 2 — Recognise (in progress)
+### Phase 2 — Browse the valley's elements (in progress)
+
+#### Commit (p) — Phase 2 redo: pure browse, no fake recognition
+
+The previous Phase 2 (commit (o)) shipped a camera + stub-recognition flow. User feedback was direct and correct: "phase two has been the worst feature." Tapping a shutter and getting a random one of five elements is worse than no recognition — the output can't be trusted, the affordance is broken. This commit replaces it with the honest play given the Expo Go constraint: **browse the dataset deliberately.**
+
+**Removed**
+- `expo-camera` — no camera in this iteration.
+- `src/features/recognition/recogniser.ts` — the stub is gone, not deferred.
+- `app/recognition/[id].tsx` — replaced.
+
+**Renamed**
+- `src/features/recognition/` → `src/features/elements/`. The folder was never about CV anyway; it always held the curated dataset.
+- `app/recognition/[id].tsx` → `app/element/[id].tsx`. Detail page is now a regular push route, not a modal — browse-then-read reads more like a slide-from-right than a slide-from-bottom.
+- i18n namespace `recognition` → `elements`. Camera-specific keys (`permission.*`, `shutter`, `thinking`, `lowConfidence`) deleted; only `browse.*`, `sources.*`, and `elements.*` remain.
+
+**Modified**
+- `app/(tabs)/explore.tsx` — now a browse view. Header text ("Five things to look for" + intro), then a scrollable column of five `ElementCard`s (1 dp border, no shadow, no random surprises). Tap → push to `/element/[id]`.
+- `app/element/[id].tsx` — same content as before (title, oneLine, context, source) but presented as a regular pushed screen. No "Best guess" label, no `×` close button — back navigation handles dismissal naturally.
+- `app/_layout.tsx` — registered `element/[id]` with slide_from_right + 240 ms (the brief's `duration.standard`). The recognition modal entry is gone.
+
+**Why this is better than (o)**
+- The user can see all five elements at once. No reliance on random sampling.
+- Tap is deterministic: tap "Boudha Stupa" → you read about Boudha Stupa. No fake confidence score, no surprise output.
+- The path back is the back swipe / hardware back, which is the standard browse gesture.
+- The dataset + context pages are real value that survive any future flip back to real CV. When/if EAS dev client happens, a camera flow can layer on top — but the browse stays.
+
+**Brief follow-up**
+BRIEF §3.1 ("Recognise") is now partially honored: the dataset is offline-first, the context appears, the photo never leaves the device (because there's no photo). The "on-device CV identifies it" part is **explicitly deferred** until an EAS dev client is in play. The brief should be amended to call out Browse as the Phase 2 Expo Go scope, with Recognise as Phase 2.5 once a custom dev build exists.
+
+**Verifications** — `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` all green. 90 tests across 19 suites.
 
 #### Commit (o) — camera flow + stubbed recognition (Expo Go-compatible)
 

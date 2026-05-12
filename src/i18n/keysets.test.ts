@@ -1,17 +1,17 @@
 import commonEn from './locales/en/common.json';
+import elementsEn from './locales/en/elements.json';
 import etiquetteEn from './locales/en/etiquette.json';
-import recognitionEn from './locales/en/recognition.json';
 import tabsEn from './locales/en/tabs.json';
 import commonNe from './locales/ne/common.json';
+import elementsNe from './locales/ne/elements.json';
 import etiquetteNe from './locales/ne/etiquette.json';
-import recognitionNe from './locales/ne/recognition.json';
 import tabsNe from './locales/ne/tabs.json';
 
 const namespaces = {
   common: { en: commonEn, ne: commonNe },
   tabs: { en: tabsEn, ne: tabsNe },
   etiquette: { en: etiquetteEn, ne: etiquetteNe },
-  recognition: { en: recognitionEn, ne: recognitionNe },
+  elements: { en: elementsEn, ne: elementsNe },
 };
 
 function collectKeyPaths(node: unknown, prefix = ''): string[] {

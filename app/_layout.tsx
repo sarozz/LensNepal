@@ -57,11 +57,10 @@ export default function RootLayout() {
                 }}
               />
               <Stack.Screen
-                name="recognition/[id]"
+                name="element/[id]"
                 options={{
-                  presentation: 'modal',
-                  animation: 'slide_from_bottom',
-                  animationDuration: 360,
+                  animation: 'slide_from_right',
+                  animationDuration: 240,
                 }}
               />
               <Stack.Screen name="+not-found" />

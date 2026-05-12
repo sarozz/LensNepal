@@ -1,13 +1,8 @@
 {
-  "permission": {
-    "title": "[NE] Camera access",
-    "body": "[NE] The lens uses your camera to identify what's in front of you. Photos stay on your phone.",
-    "grant": "[NE] Allow camera",
-    "denied": "[NE] Camera access is off. Enable it in Settings to use the lens."
+  "browse": {
+    "title": "[NE] Five things to look for",
+    "intro": "[NE] These appear across temples and courtyards in the valley. Tap any to read more."
   },
-  "shutter": "[NE] Capture",
-  "thinking": "[NE] Looking…",
-  "lowConfidence": "[NE] Best guess",
   "sources": {
     "wikipedia": "[NE] Wikipedia",
     "intro": "[NE] Where this comes from"

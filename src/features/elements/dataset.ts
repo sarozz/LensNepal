@@ -1,4 +1,4 @@
-export const RECOGNITION_DATASET = [
+export const ELEMENTS = [
   'boudha',
   'pashupatinath',
   'swayambhu',
@@ -6,19 +6,14 @@ export const RECOGNITION_DATASET = [
   'lotusMotif',
 ] as const satisfies readonly [string, ...string[]];
 
-export type ElementId = (typeof RECOGNITION_DATASET)[number];
+export type ElementId = (typeof ELEMENTS)[number];
 
-export type Match = {
-  elementId: ElementId;
-  confidence: number;
-};
-
-export type RecognisedElement = {
+export type ElementMeta = {
   id: ElementId;
   source: { url: string; labelKey: 'sources.wikipedia' };
 };
 
-export const ELEMENT_SOURCES: Record<ElementId, RecognisedElement> = {
+export const ELEMENT_META: Record<ElementId, ElementMeta> = {
   boudha: {
     id: 'boudha',
     source: { url: 'https://en.wikipedia.org/wiki/Boudhanath', labelKey: 'sources.wikipedia' },
@@ -51,5 +46,5 @@ export const ELEMENT_SOURCES: Record<ElementId, RecognisedElement> = {
 };
 
 export function isElementId(value: string): value is ElementId {
-  return (RECOGNITION_DATASET as ReadonlyArray<string>).includes(value);
+  return (ELEMENTS as ReadonlyArray<string>).includes(value);
 }
