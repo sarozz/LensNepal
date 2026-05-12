@@ -56,6 +56,14 @@ export default function RootLayout() {
                   animationDuration: 360,
                 }}
               />
+              <Stack.Screen
+                name="recognition/[id]"
+                options={{
+                  presentation: 'modal',
+                  animation: 'slide_from_bottom',
+                  animationDuration: 360,
+                }}
+              />
               <Stack.Screen name="+not-found" />
             </Stack>
           </PersistQueryClientProvider>

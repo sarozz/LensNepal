@@ -6,6 +6,38 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 2 — Recognise (in progress)
 
+#### Commit (o) — camera flow + stubbed recognition (Expo Go-compatible)
+
+User declined the EAS dev-client path. Phase 2's recognise feature ships with the real camera (`expo-camera`, bundled with Expo SDK 54, runs inside Expo Go) and a stubbed recognition function that returns a random element from a 5-strong dataset after a 600 ms "thinking" delay. Real on-device CV waits until/if an EAS dev client is set up — only `recogniser.ts` needs to be swapped.
+
+**Reverts commit (n)** — removed `expo-dev-client` and `eas.json` plus the README section. Cleaner repo since the EAS path is shelved.
+
+**Added**
+- `expo-camera@~17.0.10` — SDK 54-bundled camera, runs in Expo Go.
+
+**New files**
+- `src/features/recognition/dataset.ts` — 5 element IDs (`boudha`, `pashupatinath`, `swayambhu`, `lionGate`, `lotusMotif`) typed as a non-empty readonly tuple. Source URLs (Wikipedia) attached per BRIEF §6 ("every cultural/historical claim has a source"). Sources expander UI is Phase 4 — we just store the URL.
+- `src/features/recognition/recogniser.ts` — `recognise(photoUri): Promise<Match>` stub. Picks a random element, returns it after 600 ms. The future on-device CV swap is a single-function change.
+- `src/features/recognition/index.ts` — barrel.
+- `src/i18n/locales/{en,ne}/recognition.json` — new namespace with permission UI strings + 5 element entries (title, oneLine, context — body paragraphs ≤ 80 words, present tense, observational per BRIEF §6). All Nepali strings `[NE]`-prefixed pending native review.
+- `app/recognition/[id].tsx` — modal route showing the matched element title + oneLine + context + source. Close button top-right.
+
+**Modified**
+- `app/(tabs)/explore.tsx` — now the camera screen. Uses `useCameraPermissions()` for the permission flow, shows a permission-prompt screen with the outlined `Button` when needed, otherwise renders `CameraView` with a circular shutter overlay. Tap → `takePictureAsync` → `recognise(uri)` → `router.push('/recognition/[id]')`.
+- `app/_layout.tsx` — registered `recognition/[id]` as a modal Stack.Screen with the brief's 360 ms slide-from-bottom motion.
+- `src/i18n/types.ts` + `src/i18n/index.ts` — added `recognition` to the namespace list, types, and resources.
+- `src/i18n/keysets.test.ts` — walks the new namespace too.
+- `src/i18n/orphans.test.ts` — added 15 dynamic-key entries (`recognition:elements.<id>.{title,oneLine,context}`) plus `recognition:sources.wikipedia` to the DYNAMIC_KEY_ALLOWLIST.
+- `app.config.ts` — `experiments.typedRoutes: false`. Re-enable when Metro can regenerate the types file.
+- Deleted `.expo/types/router.d.ts` — stale; will regenerate on next `pnpm dev`.
+
+**Deviations from the brief (called out)**
+- BRIEF §3.1 says "On-device CV identifies it." We ship a stub instead. Cultural / privacy posture preserved — photos never leave the device.
+- BRIEF §9.2 lists `react-native-vision-camera` and `react-native-executorch` as Phase 2+ deps. Neither installed; replaced with `expo-camera` + stub.
+
+**Verifications**
+`pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` — 90 tests across 19 suites all green. New `recognition` namespace keysets identical between en and ne; orphan-key test clean.
+
 #### Commit (n) — set up EAS dev client for Phase 2 native modules
 
 Phase 2's core feature (on-device CV via vision-camera + ML runtime) cannot run inside off-the-shelf Expo Go. This commit prepares the repo so a custom dev client can be built once on EAS and used for the rest of the project.

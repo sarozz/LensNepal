@@ -4,7 +4,7 @@ import * as path from 'node:path';
 const PROJECT_ROOT = path.resolve(__dirname, '../..');
 const SOURCE_DIRS = ['src', 'app'];
 const LOCALE_EN_DIR = path.join(PROJECT_ROOT, 'src/i18n/locales/en');
-const NAMESPACES = ['common', 'tabs', 'etiquette'] as const;
+const NAMESPACES = ['common', 'tabs', 'etiquette', 'recognition'] as const;
 
 // Keys referenced via template literals or computed values that the static
 // regex below cannot match. Add a row when a new dynamic call appears.
@@ -20,6 +20,24 @@ const DYNAMIC_KEY_ALLOWLIST: ReadonlyArray<string> = [
   'etiquette:sections.sacredObjects.body',
   'etiquette:sections.kumari.title',
   'etiquette:sections.kumari.body',
+  // app/recognition/[id].tsx — t(`elements.${id}.title`/.oneLine/.context)
+  'recognition:elements.boudha.title',
+  'recognition:elements.boudha.oneLine',
+  'recognition:elements.boudha.context',
+  'recognition:elements.pashupatinath.title',
+  'recognition:elements.pashupatinath.oneLine',
+  'recognition:elements.pashupatinath.context',
+  'recognition:elements.swayambhu.title',
+  'recognition:elements.swayambhu.oneLine',
+  'recognition:elements.swayambhu.context',
+  'recognition:elements.lionGate.title',
+  'recognition:elements.lionGate.oneLine',
+  'recognition:elements.lionGate.context',
+  'recognition:elements.lotusMotif.title',
+  'recognition:elements.lotusMotif.oneLine',
+  'recognition:elements.lotusMotif.context',
+  // app/recognition/[id].tsx — t(element.source.labelKey)
+  'recognition:sources.wikipedia',
 ];
 
 // Keys deliberately seeded in commit (c) as common-namespace API surface for

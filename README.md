@@ -50,26 +50,6 @@ All optional. Code paths no-op when absent. Read via `expo-constants → expoCon
 | `EXPO_PUBLIC_POSTHOG_API_KEY` | PostHog init |
 | `EXPO_PUBLIC_POSTHOG_HOST` | PostHog host (default: `https://eu.i.posthog.com`) |
 
-## Custom development client (EAS Build)
-
-Phase 2 features (camera, on-device CV) need native modules that don't ship inside Expo Go. Build a custom dev client once, then `pnpm dev` connects to it just like Expo Go.
-
-```bash
-# Once per machine:
-npm install -g eas-cli
-eas login                # create a free Expo account at expo.dev if needed
-
-# Inside the project:
-cd ~/Desktop/lensnepal
-pnpm install
-eas init                 # links project to your Expo account (first time only)
-eas build --profile development --platform ios   # ~10-15 min, cloud build
-```
-
-When the build finishes you'll get a link/QR. Open it on your phone to install **Kathmandu Lens (dev)**. From then on, run `pnpm dev` locally and scan the QR with the dev client (not Expo Go).
-
-Android: swap `--platform ios` for `--platform android`. The simulator build (`"simulator": true` in `eas.json`) lets you run on iOS Simulator without code-signing.
-
 ## Running the E2E smoke flow
 
 Maestro is a separate CLI, not an npm package. Install it once on the host:

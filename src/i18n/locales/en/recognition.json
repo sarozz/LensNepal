@@ -1,0 +1,42 @@
+{
+  "permission": {
+    "title": "Camera access",
+    "body": "The lens uses your camera to identify what's in front of you. Photos stay on your phone.",
+    "grant": "Allow camera",
+    "denied": "Camera access is off. Enable it in Settings to use the lens."
+  },
+  "shutter": "Capture",
+  "thinking": "Looking…",
+  "lowConfidence": "Best guess",
+  "sources": {
+    "wikipedia": "Wikipedia",
+    "intro": "Where this comes from"
+  },
+  "elements": {
+    "boudha": {
+      "title": "Boudha Stupa",
+      "oneLine": "A great white dome with painted eyes facing every direction.",
+      "context": "The stupa is one of the largest in the world, a centre for Tibetan Buddhist practice. Pilgrims circumambulate clockwise; prayer wheels line the base. The painted eyes — set above each cardinal face — are the wisdom eyes of the Buddha. Surrounding rings of buildings hold monasteries, painters, and small tea houses. Festival days bring monks, butter lamps, and family processions to the rim."
+    },
+    "pashupatinath": {
+      "title": "Pashupatinath",
+      "oneLine": "A Shiva linga at one of Hinduism's holiest temples, on the Bagmati river.",
+      "context": "Pashupatinath is the principal temple of Pashupati, an incarnation of Shiva as 'lord of animals.' Only Hindus enter the inner sanctum. The temple complex spreads along the Bagmati riverbank, where cremation ghats burn day and night. Sadhus — ascetics in saffron, ash-smeared and dreadlocked — stay in shelters along the river. Photographing the cremations, or any priest in trance, is not part of the visit."
+    },
+    "swayambhu": {
+      "title": "Swayambhu eyes",
+      "oneLine": "The Buddha's painted eyes on the harmika of a stupa, with a question-mark nose between them.",
+      "context": "The eyes look out from every stupa face in the valley. The 'nose' between them is the Devanagari numeral 1 — symbolising unity. Above is a third eye, the eye of insight. The stupa itself sits atop the hill west of Kathmandu, surrounded by monkeys, shrines, and prayer flags. The climb is steep; the view of the city, especially at dusk, is the reward."
+    },
+    "lionGate": {
+      "title": "Stone lions",
+      "oneLine": "A pair of stone lions guarding a temple threshold, usually in Patan or Bhaktapur.",
+      "context": "Stone lions sit at most temple entrances in the Newari cities of Patan and Bhaktapur. They are guardians — fierce, paws-up, mouths open. Pairs face inward toward the door. They predate Buddhist and Hindu syncretism here; their style reaches back through centuries of Newari masonry. People do not climb or sit on them. Touching the head briefly on entry is sometimes seen, never expected."
+    },
+    "lotusMotif": {
+      "title": "Lotus motif",
+      "oneLine": "An eight-petalled lotus carved or painted on a window, lintel, or shrine ceiling.",
+      "context": "The lotus appears in both Buddhist and Hindu iconography here. Eight petals stand for the eight noble truths or the eight directions, depending on context. The flower rises clean from murky water — a metaphor across traditions. Look up at temple lintels, painted ceiling rosettes, or the centre of Newari window frames. The carving is often deeper than first appearance suggests; a flat-looking square is usually four overlapping layers."
+    }
+  }
+}

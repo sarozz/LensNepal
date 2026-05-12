@@ -3,15 +3,17 @@ import { initReactI18next } from 'react-i18next';
 import { detectLanguage } from './detect';
 import commonEn from './locales/en/common.json';
 import etiquetteEn from './locales/en/etiquette.json';
+import recognitionEn from './locales/en/recognition.json';
 import tabsEn from './locales/en/tabs.json';
 import commonNe from './locales/ne/common.json';
 import etiquetteNe from './locales/ne/etiquette.json';
+import recognitionNe from './locales/ne/recognition.json';
 import tabsNe from './locales/ne/tabs.json';
 import { NAMESPACES } from './types';
 
 export const resources = {
-  en: { common: commonEn, tabs: tabsEn, etiquette: etiquetteEn },
-  ne: { common: commonNe, tabs: tabsNe, etiquette: etiquetteNe },
+  en: { common: commonEn, tabs: tabsEn, etiquette: etiquetteEn, recognition: recognitionEn },
+  ne: { common: commonNe, tabs: tabsNe, etiquette: etiquetteNe, recognition: recognitionNe },
 } as const;
 
 void i18n.use(initReactI18next).init({

@@ -22,7 +22,7 @@ const config: ExpoConfig = {
   },
   plugins: ['expo-router', 'expo-font', 'expo-localization'],
   experiments: {
-    typedRoutes: true,
+    typedRoutes: false,
   },
   extra: {
     sentryDsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
