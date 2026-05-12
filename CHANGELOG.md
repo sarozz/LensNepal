@@ -4,7 +4,21 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ## [Unreleased]
 
-### Phase 1 — Foundation (in progress)
+### Phase 2 — Recognise (in progress)
+
+#### Commit (n) — set up EAS dev client for Phase 2 native modules
+
+Phase 2's core feature (on-device CV via vision-camera + ML runtime) cannot run inside off-the-shelf Expo Go. This commit prepares the repo so a custom dev client can be built once on EAS and used for the rest of the project.
+
+- Added `expo-dev-client@~6.0.21` to dependencies — the runtime your custom dev client wraps.
+- Added `eas.json` with three profiles: `development` (sim-friendly, includes dev client), `preview` (internal distribution), `production` (autoIncrement, channel: production).
+- `README.md` gained a "Custom development client (EAS Build)" section with the four commands the user runs once per machine: `npm i -g eas-cli`, `eas login`, `eas init`, `eas build --profile development --platform ios`.
+
+Native modules that need a dev client (`react-native-vision-camera`, on-device ML, plus optionally re-adding `react-native-unistyles@3` / `react-native-mmkv@3`) ship in subsequent commits once the dev client is verified on-device.
+
+Verifications: `pnpm install` clean (one harmless peer warning, unchanged), `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` — 88 tests across 19 suites still green.
+
+### Phase 1 — Foundation
 
 #### Commit (m) — drop native-module deps so Expo Go can run the app
 
