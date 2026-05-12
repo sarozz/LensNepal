@@ -6,6 +6,41 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 1 — Foundation (in progress)
 
+#### Commit (l) — SDK 55 → SDK 54 rollback
+
+User has Expo Go pinned to SDK 54 and explicitly requested the project be downgraded to match. **This reverses commit (a)'s SDK 55 bump.** All Phase 1 features (etiquette, theme switcher, primitives, tests) remain unchanged — only version pins shift.
+
+The brief's original SDK 54 pin table (BRIEF §9.2) had inaccurate versions — `expo-router@^4`, `expo-image@^2`, `expo-splash-screen@^30` etc. didn't exist on npm in those forms. Used the canonical `bundledNativeModules.json` from `expo@54.0.34` to pin every package correctly:
+
+| Package | SDK 55 → SDK 54 |
+|---|---|
+| `expo` | `~55.0.23` → `~54.0.34` |
+| `expo-router` | `~55.0.14` → **`~6.0.23`** (brief said `^4` — that pin was wildly wrong) |
+| `expo-font` | `~55.0.0` → `~14.0.11` |
+| `expo-localization` | `~55.0.0` → `~17.0.8` |
+| `expo-haptics` | `~55.0.0` → `~15.0.8` |
+| `expo-image` | `~55.0.0` → `~3.0.11` |
+| `expo-splash-screen` | `~55.0.20` → `~31.0.13` |
+| `expo-status-bar` | `~55.0.0` → `~3.0.9` |
+| `expo-constants` | `~55.0.0` → `~18.0.13` |
+| `expo-linking` | `~55.0.0` → `~8.0.12` |
+| `jest-expo` | `~55.0.0` → `~54.0.17` |
+| `react` | `19.2.6` → `19.1.0` |
+| `react-native` | `0.81.6` → `0.81.5` |
+| `react-native-worklets` | `^0.8.3` → `0.5.1` |
+| `react-native-reanimated` | `^4.0.0` → `~4.1.1` |
+| `react-native-gesture-handler` | `^2.20.0` → `~2.28.0` |
+| `react-native-screens` | `^4.0.0` → `~4.16.0` |
+| `react-native-safe-area-context` | `^5.0.0` → `~5.6.0` |
+| `react-test-renderer` | `19.2.6` → `19.1.0` |
+| `@types/react` | `~19.2.0` → `~19.1.0` |
+
+`app.config.ts` restored `newArchEnabled: true` (a valid `ExpoConfig` field in SDK 54).
+
+`pnpm-lock.yaml` regenerated. 92 tests across 19 suites still pass; typecheck, lint, format all clean. One harmless peer-dep warning: react-dom@19.2.6 wants react@^19.2.6, found 19.1.0 — only relevant on web target, not native.
+
+Brief follow-up: BRIEF §9.2's pin table needs to be replaced with the actual SDK 54 versions from `bundledNativeModules.json` (not the values that were originally written). Same footprint as before, accurate values.
+
 #### Commit (k) — visual maturity (polish round 2)
 
 Targeted polish after a candid round-1 review. Closes most of the deferred items from commit (j).

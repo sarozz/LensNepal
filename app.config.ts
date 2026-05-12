@@ -7,6 +7,7 @@ const config: ExpoConfig = {
   scheme: 'kathmandu-lens',
   orientation: 'portrait',
   userInterfaceStyle: 'automatic',
+  newArchEnabled: true,
   splash: {
     backgroundColor: '#FAF7F2',
     resizeMode: 'contain',
