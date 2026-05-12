@@ -32,6 +32,41 @@
       "title": "[NE] Lotus motif",
       "oneLine": "[NE] An eight-petalled lotus carved or painted on a window, lintel, or shrine ceiling.",
       "context": "[NE] The lotus appears in both Buddhist and Hindu iconography here. Eight petals stand for the eight noble truths or the eight directions, depending on context. The flower rises clean from murky water — a metaphor across traditions. Look up at temple lintels, painted ceiling rosettes, or the centre of Newari window frames. The carving is often deeper than first appearance suggests; a flat-looking square is usually four overlapping layers."
+    },
+    "patanDurbar": {
+      "title": "[NE] Patan Durbar Square",
+      "oneLine": "[NE] The old royal courtyard at the heart of Patan, ringed by stone temples and the former palace.",
+      "context": "[NE] Patan Durbar Square holds the highest density of temples in the valley — Krishna in three forms, a Bhimsen shrine, a Taleju gate. The palace east of the square is now a museum with bronzes from the seventh century onward. Stone steps form a low theatre on the south side, where people sit at dusk. The square paving is laid in repeating diamonds. Side alleys north lead into private Newari courtyards."
+    },
+    "bhaktapurDurbar": {
+      "title": "[NE] Bhaktapur Durbar Square",
+      "oneLine": "[NE] The medieval city centre, less restored than rebuilt, with the Fifty-Five-Window Palace at its head.",
+      "context": "[NE] Bhaktapur is the third old royal city. The Durbar Square sits below the Fifty-Five-Window Palace, where the windows were each carved as a separate face of the building. Earthquake damage from 2015 is still visible in places; restoration uses traditional materials. The Vatsala temple, the Char Dham group, and the Golden Gate cluster on the eastern flank. Tour groups arrive after ten; before then the square belongs to locals and pigeons."
+    },
+    "newariWindow": {
+      "title": "[NE] Newari window",
+      "oneLine": "[NE] A wooden lattice window with overlapping rosettes, set into a brick facade above the street.",
+      "context": "[NE] Newari windows are the architectural signature of the valley. Each is carved from a single piece of sal wood — overlapping circles, peacocks, vines, deities — then fitted into the brick facade. The deeper the relief, the older the house. Sun moves through them as filtered patches across the inside floor. The peacock window in Bhaktapur (mid-fifteenth century) is the most famous; smaller versions sit on every old street."
+    },
+    "torana": {
+      "title": "[NE] Torana",
+      "oneLine": "[NE] A semicircular carved lintel above a shrine doorway, depicting deities and mythical creatures.",
+      "context": "[NE] The torana is the carved arch above a temple entrance. The deity of the shrine sits at the centre — a Buddha, Shiva, or local goddess — surrounded by makaras, garudas, and entwined nagas. Older toranas are wood; newer ones are gilt copper. The detail is often invisible from the ground until you look up at the right angle. Most date from the seventeenth or eighteenth century, restored multiple times since."
+    },
+    "prayerWheel": {
+      "title": "[NE] Prayer wheel",
+      "oneLine": "[NE] A cylindrical drum carved with mantras, spun clockwise by hand or wind.",
+      "context": "[NE] Prayer wheels appear at every stupa and many temples. Each contains a tightly rolled paper printed with the mantra, often Om Mani Padme Hum. Spinning the wheel clockwise releases the mantra into the world. Some wheels are small enough to spin in passing; others sit two metres tall in their own shed, turned with a rope. Wind-spun and water-spun versions exist in monasteries. We touch them with the right hand."
+    },
+    "bell": {
+      "title": "[NE] Bell",
+      "oneLine": "[NE] A bronze bell at the threshold of a temple, rung once gently to announce a visitor.",
+      "context": "[NE] The temple bell is rung on entry, once. The sound announces the visitor's presence to the deity. It is not rung to summon attention or in passing. Bells in the valley are bronze, lost-wax cast, often hung from the ceiling beam of a covered porch. Larger bells in stupa courtyards have their own pavilion. The clapper is sometimes a knotted cloth. After ringing, the visitor steps in quietly."
+    },
+    "diyo": {
+      "title": "[NE] Diyo",
+      "oneLine": "[NE] A small clay oil lamp, filled with ghee or mustard oil, lit for puja or festival.",
+      "context": "[NE] The diyo is the most ordinary sacred object in the valley. Made of unfired or low-fired clay, it holds a cotton-thread wick and a teaspoon of ghee or mustard oil. Diyos are lit daily at household shrines, and in great numbers at Tihar, the festival of lights. They are set in lines on doorstep niches, along temple walls, and floated on water at Bagmati ghats. After use, broken diyos return to the earth."
     }
   }
 }

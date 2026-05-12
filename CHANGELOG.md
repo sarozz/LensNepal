@@ -6,6 +6,43 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 2 — Browse the valley's elements (in progress)
 
+#### Commit (t) — dataset depth: five elements → twelve
+
+Direct response to user feedback that five was too thin. Adds seven more, ranging from major monuments down to common household objects, so the Explore tab now reads as a curated collection rather than a starter sample.
+
+**Added**
+| ID | Title | Tint |
+| --- | --- | --- |
+| `patanDurbar` | Patan Durbar Square | warm pink |
+| `bhaktapurDurbar` | Bhaktapur Durbar Square | brick red |
+| `newariWindow` | Newari window | dark wood |
+| `torana` | Torana | ochre |
+| `prayerWheel` | Prayer wheel | copper |
+| `bell` | Bell | bronze |
+| `diyo` | Diyo | warm flame |
+
+Each ships with a title, one-line, ~80-word context paragraph (present-tense, observational, no "must/should/do not" per BRIEF §6), a Wikipedia source URL, and a tint that fits the calm palette without colliding with the existing five. Nepali strings mirrored with `[NE]`-prefixed stubs as before — pending cultural-review pass.
+
+**Distribution**
+- 2 royal courtyards (Patan, Bhaktapur Durbar)
+- 1 architectural element (Newari window)
+- 1 carving (torana)
+- 3 sacred objects (prayer wheel, bell, diyo)
+
+Combined with the original five, the dataset now spans **monuments / motifs / objects / architecture** roughly evenly.
+
+**Modified**
+- `src/features/elements/dataset.ts` — 7 new entries, ELEMENTS tuple grown to 12
+- `src/i18n/locales/{en,ne}/elements.json` — 7 new blocks
+- `src/i18n/orphans.test.ts` — 21 new dynamic-key entries (3 keys × 7 elements)
+
+**Still pending**
+- Real photographs (sandbox can't fetch Commons; user drops them in locally)
+- Multiple sources per element (one Wikipedia URL each for now)
+- Notes on saved items + cross-linking (next commits)
+
+**Verifications** — `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` all green. 94 tests across 19 suites.
+
 #### Commit (s) — visual lift: tints, thumbnails, heroes, image pipeline
 
 Direct response to user feedback ("looks so basic, no images"). Lifts the visible surface from bordered-text cards to image-ready cards with per-element visual identity. Real photos can be dropped in on the Mac without code changes beyond a `require()`.
