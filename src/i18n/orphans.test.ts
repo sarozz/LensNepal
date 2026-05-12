@@ -4,7 +4,7 @@ import * as path from 'node:path';
 const PROJECT_ROOT = path.resolve(__dirname, '../..');
 const SOURCE_DIRS = ['src', 'app'];
 const LOCALE_EN_DIR = path.join(PROJECT_ROOT, 'src/i18n/locales/en');
-const NAMESPACES = ['common', 'tabs', 'etiquette', 'elements'] as const;
+const NAMESPACES = ['common', 'tabs', 'etiquette', 'elements', 'routes'] as const;
 
 // Keys referenced via template literals or computed values that the static
 // regex below cannot match. Add a row when a new dynamic call appears.
@@ -38,6 +38,22 @@ const DYNAMIC_KEY_ALLOWLIST: ReadonlyArray<string> = [
   'elements:elements.lotusMotif.context',
   // app/recognition/[id].tsx — t(element.source.labelKey)
   'elements:sources.wikipedia',
+  // app/route/[id].tsx — t(`routes.${id}.title|oneLine|description|whenToGo|tips`)
+  'routes:routes.patanDawn.title',
+  'routes:routes.patanDawn.oneLine',
+  'routes:routes.patanDawn.description',
+  'routes:routes.patanDawn.whenToGo',
+  'routes:routes.patanDawn.tips',
+  'routes:routes.boudhaKora.title',
+  'routes:routes.boudhaKora.oneLine',
+  'routes:routes.boudhaKora.description',
+  'routes:routes.boudhaKora.whenToGo',
+  'routes:routes.boudhaKora.tips',
+  'routes:routes.swayambhuClimb.title',
+  'routes:routes.swayambhuClimb.oneLine',
+  'routes:routes.swayambhuClimb.description',
+  'routes:routes.swayambhuClimb.whenToGo',
+  'routes:routes.swayambhuClimb.tips',
 ];
 
 // Keys deliberately seeded in commit (c) as common-namespace API surface for

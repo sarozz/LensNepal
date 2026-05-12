@@ -63,6 +63,13 @@ export default function RootLayout() {
                   animationDuration: 240,
                 }}
               />
+              <Stack.Screen
+                name="route/[id]"
+                options={{
+                  animation: 'slide_from_right',
+                  animationDuration: 240,
+                }}
+              />
               <Stack.Screen name="+not-found" />
             </Stack>
           </PersistQueryClientProvider>

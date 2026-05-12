@@ -6,6 +6,33 @@ All notable changes to Kathmandu Lens are documented here. The format follows [K
 
 ### Phase 2 — Browse the valley's elements (in progress)
 
+#### Commit (q) — Routes browse: three curated walks
+
+Same pattern as the elements browse from commit (p). Routes tab moves from placeholder to real content. No native map, no GPS — text content only, Expo Go-compatible.
+
+**New**
+- `src/features/routes/dataset.ts` — three route IDs (`patanDawn`, `boudhaKora`, `swayambhuClimb`) typed as a non-empty readonly tuple. Each has a `distanceKm` and `walkingMinutes`.
+- `src/features/routes/index.ts` — barrel.
+- `src/i18n/locales/{en,ne}/routes.json` — `browse.*` header text, `meta.distance` / `meta.duration` interpolated strings, `sections.whenToGo` / `sections.tips`, and per-route `title` / `oneLine` / `description` / `whenToGo` / `tips`. All five sections per route at ≤ 80 words, present-tense, observational per BRIEF §6.
+- `app/route/[id].tsx` — push-route detail page mirroring `app/element/[id].tsx`.
+
+**Modified**
+- `app/(tabs)/routes.tsx` — placeholder replaced with a browse view: header text, three RouteCard rows (title + one-line + distance · duration). Tap → push to `/route/[id]`.
+- `app/_layout.tsx` — registered `route/[id]` Stack.Screen with the brief's slide-from-right + 240 ms motion.
+- `src/i18n/types.ts` + `src/i18n/index.ts` — added `routes` namespace.
+- `src/i18n/keysets.test.ts` — walks the new namespace.
+- `src/i18n/orphans.test.ts` — added the 15 dynamic-key entries (`routes:routes.<id>.{title,oneLine,description,whenToGo,tips}`).
+
+**Out of scope**
+- Live map / GPS / turn-by-turn — `react-native-maps` is a native module, needs an EAS dev client. Routes are text-only for now.
+- Cross-linking route stops to element pages — possible later; not in MVP.
+- Real images of the routes — content drop.
+
+**Brief alignment**
+BRIEF §3.3 "Walk" partially honored: offline route descriptions, advice on timing, no internet required. The map / route-finding pieces (which the brief implies) are explicitly deferred until a dev client exists.
+
+**Verifications** — `pnpm typecheck`, `pnpm lint`, `pnpm format:check`, `pnpm test` all green. 92 tests across 19 suites.
+
 #### Commit (p) — Phase 2 redo: pure browse, no fake recognition
 
 The previous Phase 2 (commit (o)) shipped a camera + stub-recognition flow. User feedback was direct and correct: "phase two has been the worst feature." Tapping a shutter and getting a random one of five elements is worse than no recognition — the output can't be trusted, the affordance is broken. This commit replaces it with the honest play given the Expo Go constraint: **browse the dataset deliberately.**

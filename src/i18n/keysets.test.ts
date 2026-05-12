@@ -1,10 +1,12 @@
 import commonEn from './locales/en/common.json';
 import elementsEn from './locales/en/elements.json';
 import etiquetteEn from './locales/en/etiquette.json';
+import routesEn from './locales/en/routes.json';
 import tabsEn from './locales/en/tabs.json';
 import commonNe from './locales/ne/common.json';
 import elementsNe from './locales/ne/elements.json';
 import etiquetteNe from './locales/ne/etiquette.json';
+import routesNe from './locales/ne/routes.json';
 import tabsNe from './locales/ne/tabs.json';
 
 const namespaces = {
@@ -12,6 +14,7 @@ const namespaces = {
   tabs: { en: tabsEn, ne: tabsNe },
   etiquette: { en: etiquetteEn, ne: etiquetteNe },
   elements: { en: elementsEn, ne: elementsNe },
+  routes: { en: routesEn, ne: routesNe },
 };
 
 function collectKeyPaths(node: unknown, prefix = ''): string[] {
